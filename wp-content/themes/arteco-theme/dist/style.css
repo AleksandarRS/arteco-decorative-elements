@@ -3151,10 +3151,9 @@ h6 {
 @font-face {
   font-family: "font-icons";
   src: url("../assets/fonts/font-icons/font-icons.woff2") format("woff2"), url("../assets/fonts/font-icons/font-icons.woff") format("woff"), url("../assets/fonts/font-icons/font-icons.ttf") format("truetype");
-  font-display: swap;
 }
 
-.icon-angle-down:before, .icon-angle-left:before, .icon-angle-right:before, .icon-angle-up:before {
+.icon-angle-down:before, .icon-angle-left:before, .icon-angle-right:before, .icon-angle-up:before, .icon-chimney:before, .icon-facebook:before, .icon-google-plus-g:before, .icon-industry:before, .icon-instagram:before, .icon-linkedin:before, .icon-pinterest:before, .icon-puzzle-piece:before, .icon-search:before, .icon-toolbox:before, .icon-twitter:before, .icon-warehouse-alt:before, .icon-youtube:before {
   font-family: "font-icons";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -3179,6 +3178,58 @@ h6 {
 
 .icon-angle-up:before {
   content: "";
+}
+
+.icon-chimney:before {
+  content: "";
+}
+
+.icon-facebook:before {
+  content: "";
+}
+
+.icon-google-plus-g:before {
+  content: "";
+}
+
+.icon-industry:before {
+  content: "";
+}
+
+.icon-instagram:before {
+  content: "";
+}
+
+.icon-linkedin:before {
+  content: "";
+}
+
+.icon-pinterest:before {
+  content: "";
+}
+
+.icon-puzzle-piece:before {
+  content: "";
+}
+
+.icon-search:before {
+  content: "";
+}
+
+.icon-toolbox:before {
+  content: "";
+}
+
+.icon-twitter:before {
+  content: "";
+}
+
+.icon-warehouse-alt:before {
+  content: "";
+}
+
+.icon-youtube:before {
+  content: "";
 }
 
 .site-branding-main-logo {
@@ -3496,16 +3547,24 @@ h6 {
   position: relative;
 }
 
-.button.primary {
+.button {
+  border: 1px solid;
+  padding: 10px 20px;
+}
+
+.button.button-primary {
   background-color: #303030;
+  color: #ffffff;
 }
 
-.button.secondary {
+.button.button-secondary {
   background-color: blue;
+  color: #ffffff;
 }
 
-.button.tertiary {
+.button.button-tertiary {
   background-color: red;
+  color: #ffffff;
 }
 
 .nav-links {

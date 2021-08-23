@@ -1,9 +1,29 @@
-<div class="clear"></div>
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+
+// Show a message until the field is set up.
+if ( empty( $field['form_select'] ) && $field['post_field'] !== 'post_category' ) {
+	?>
+	<span class="frm-with-left-icon frm-not-set" id="setup-message-<?php echo esc_attr( $field['id'] ); ?>">
+		<?php FrmProAppHelper::icon_by_class( 'frm_icon_font frm_report_problem_solid_icon' ); ?>
+		<input type="text" value="<?php esc_attr_e( 'This field is not set up yet.', 'formidable-pro' ); ?>" disabled />
+	</span>
+	<input type="hidden" name="<?php echo esc_attr( $field_name ); ?>" value="" />
+	<?php
+	return;
+}
+
 if ( ! isset( $field['data_type'] ) || $field['data_type'] == 'data' ) {
-	_e( 'This data is dynamic on change', 'formidable-pro' );
-} else if ( $field['data_type'] == 'select' ) { ?>
-	<select name="<?php echo esc_attr( $field_name ) ?>" id="<?php echo esc_attr( $field_name ) ?>" <?php
+	?>
+	<span id="setup-message-<?php echo esc_attr( $field['id'] ); ?>">
+		<input type="text" value="<?php esc_attr_e( 'This field content is dynamic', 'formidable-pro' ); ?>" disabled />
+	</span>
+	<?php
+} else if ( $field['data_type'] == 'select' ) {
+	?>
+	<select name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $field['html_id'] ); ?>" <?php
 		echo FrmField::is_multiple_select( $field ) ? 'multiple="multiple" ' : '';
 		?>>
 		<?php
@@ -17,7 +37,7 @@ if ( ! isset( $field['data_type'] ) || $field['data_type'] == 'data' ) {
 			}
 		} else {
 		?>
-			<option value="">&mdash; <?php _e( 'This data is dynamic on change', 'formidable-pro' ) ?> &mdash;</option>
+			<option value="">&mdash; <?php esc_html_e( 'This data is dynamic on change', 'formidable-pro' ); ?> &mdash;</option>
 		<?php } ?>
 	</select>
 <?php
@@ -38,7 +58,7 @@ if ( ! isset( $field['data_type'] ) || $field['data_type'] == 'data' ) {
 		<?php
 		}
 	} else {
-		esc_html_e( 'There are no options', 'formidable-pro' );
+		esc_html_e( 'There are no dynamic options', 'formidable-pro' );
 	}
 } elseif ( $field['data_type'] == 'radio' ) {
 	if ( $field['options'] ) {
@@ -49,7 +69,7 @@ if ( ! isset( $field['data_type'] ) || $field['data_type'] == 'data' ) {
 			<?php
 		}
 	} else {
-		esc_html_e( 'There are no options', 'formidable-pro' );
+		esc_html_e( 'There are no dynamic options', 'formidable-pro' );
 	}
 } else {
 	esc_html_e( 'This data is dynamic on change', 'formidable-pro' );

@@ -1,4 +1,8 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+
 // Check if field is read only
 $disabled = ( FrmField::is_read_only( $field ) && ! FrmAppHelper::is_admin() ) ? ' disabled="disabled"' : '';
 
@@ -17,7 +21,7 @@ if ( $field['data_type'] == 'select' ) {
 
 		if ( $field['options'] ) {
 			foreach ( $field['options'] as $opt_key => $opt ) {
-				$selected = ( $field['value'] == $opt_key || in_array( $opt_key, (array) $field['value'] ) ) ? ' selected="selected"' : '';
+				$selected = ( $opt_key !== '' && ( $field['value'] == $opt_key || in_array( $opt_key, (array) $field['value'] ) ) ) ? ' selected="selected"' : '';
 ?>
 <option value="<?php echo esc_attr( $opt_key ) ?>"<?php echo $selected; ?>><?php echo ( $opt == '' ) ? ' ' : esc_html( $opt ); ?></option>
 <?php

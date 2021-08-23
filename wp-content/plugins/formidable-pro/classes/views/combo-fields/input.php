@@ -1,4 +1,9 @@
-<fieldset>
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+?>
+<fieldset aria-labelledby="<?php echo esc_attr( $html_id ); ?>_label">
 <legend class="frm_screen_reader frm_hidden">
 	<?php echo esc_html( $field['name'] ); ?>
 </legend>
@@ -7,7 +12,7 @@
 <div id="frm_field_<?php echo esc_attr( $field['id'] . '-' . $key ); ?>_container" class="frm_form_field form-field <?php
 	echo esc_attr( $sub_field['classes'] );
 	if ( isset( $errors ) ) {
-		FrmProComboFieldsController::maybe_add_error_class( compact( 'field', 'key', 'errors' ) );
+		FrmProComboFieldsController::maybe_add_error_class( compact( 'field', 'key', 'errors', 'atts' ) );
 	}
 	?>">
 	<label for="<?php echo esc_attr( $html_id . '_' . $key ) ?>" class="frm_screen_reader frm_hidden">
@@ -36,14 +41,15 @@
 
 	if ( $sub_field['label'] ) {
 		FrmProComboFieldsController::include_sub_label( array(
-			'field' => $field, 'option_name' => $key . '_desc'
+			'field' => $field, 'option_name' => $key . '_desc',
 		) );
 	}
 
+	$temp_id = ! empty( $atts['field_id'] ) ? $atts['field_id'] : $field['id'];
 	// Don't show individual field errors when there is a combo field error
-	if ( ! empty( $errors ) && isset( $errors[ 'field' . $field['id'] . '-' . $key ] ) && ! isset( $errors[ 'field' . $field['id'] ] ) ) {
+	if ( ! empty( $errors ) && isset( $errors[ 'field' . $temp_id . '-' . $key ] ) && ! isset( $errors[ 'field' . $field['id'] ] ) ) {
 	?>
-	<div class="frm_error"><?php echo esc_html( $errors[ 'field' . $field['id'] . '-' . $key ] ) ?></div>
+	<div class="frm_error"><?php echo esc_html( $errors[ 'field' . $temp_id . '-' . $key ] ) ?></div>
 	<?php } ?>
 </div>
 <?php } ?>

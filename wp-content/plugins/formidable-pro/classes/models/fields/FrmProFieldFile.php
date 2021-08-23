@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+
 /**
  * @since 3.0
  */
@@ -11,7 +15,7 @@ class FrmProFieldFile extends FrmFieldType {
 	 */
 	protected $type = 'file';
 
-	protected $is_tall = true;
+	private $entry_id;
 
 	protected function include_form_builder_file() {
 		return FrmProAppHelper::plugin_path() . '/classes/views/frmpro-fields/back-end/field-' . $this->type . '.php';
@@ -19,7 +23,6 @@ class FrmProFieldFile extends FrmFieldType {
 
 	protected function field_settings_for_type() {
 		$settings = array(
-			'default_value' => true,
 			'invalid'       => true,
 			'read_only'     => true,
 		);
@@ -35,19 +38,32 @@ class FrmProFieldFile extends FrmFieldType {
 			'delete' => false,
 			'restrict' => 0,
 			'resize'     => false,
-			'new_size'  => '600',
+			'new_size'   => '600',
 			'resize_dir' => 'width',
+			'drop_msg'   => __( 'Drop a file here or click to upload', 'formidable-pro' ),
+			'choose_msg' => __( 'Choose File', 'formidable-pro' ),
 		);
 	}
 
 	/**
-	 * @since 3.01.01
+	 * @since 4.0
 	 */
-	public function show_options( $field, $display, $values ) {
+	public function show_primary_options( $args ) {
+		$field = $args['field'];
 		$mimes = $this->get_mime_options( $field );
 		include( FrmProAppHelper::plugin_path() . '/classes/views/frmpro-fields/back-end/file-options.php' );
 
-		parent::show_options( $field, $display, $values );
+		parent::show_primary_options( $args );
+	}
+
+	/**
+	 * @since 3.06.01
+	 */
+	public function translatable_strings() {
+		$strings   = parent::translatable_strings();
+		$strings[] = 'drop_msg';
+		$strings[] = 'choose_msg';
+		return $strings;
 	}
 
 	/**
@@ -136,12 +152,7 @@ class FrmProFieldFile extends FrmFieldType {
 			//size options are thumbnail, medium, large, or full
 			$size = $this->set_size( $atts );
 
-			$new_atts = array(
-				'show_filename' => ( isset( $atts['show_filename'] ) && $atts['show_filename'] ) ? true : false,
-				'show_image' => ( isset( $atts['show_image'] ) && $atts['show_image'] ) ? true : false,
-				'add_link' => ( isset( $atts['add_link'] ) && $atts['add_link'] ) ? true : false,
-				'new_tab' => ( isset( $atts['new_tab'] ) && $atts['new_tab'] ) ? true : false,
-			);
+			$new_atts = $this->set_file_atts( $atts );
 
 			$this->modify_atts_for_reverse_compatibility( $atts, $new_atts );
 
@@ -154,13 +165,23 @@ class FrmProFieldFile extends FrmFieldType {
 		}
 	}
 
+	public function set_file_atts( $atts ) {
+		$new_atts = array(
+			'show_filename' => ( isset( $atts['show_filename'] ) && $atts['show_filename'] ),
+			'show_image'    => ( isset( $atts['show_image'] ) && $atts['show_image'] ),
+			'add_link'      => ( isset( $atts['add_link'] ) && $atts['add_link'] ),
+			'new_tab'       => ( isset( $atts['new_tab'] ) && $atts['new_tab'] ),
+		);
+		return array_merge( $atts, $new_atts );
+	}
+
 	/**
 	 * Check the 'size' first, and fallback to 'show' for reverse compatibility
 	 * Set the default size for showing images
 	 *
 	 * @since 3.0
 	 */
-	private function set_size( $atts ) {
+	public function set_size( $atts ) {
 		if ( isset( $atts['size'] ) ) {
 			$size = $atts['size'];
 		} elseif ( isset( $atts['show'] ) ) {
@@ -221,6 +242,7 @@ class FrmProFieldFile extends FrmFieldType {
 	 */
 	public function get_displayed_file_html( $ids, $size = 'thumbnail', $atts = array() ) {
 		$defaults = array(
+			'class'         => '',
 			'show_filename' => false,
 			'show_image' => false,
 			'add_link' => false,
@@ -255,63 +277,57 @@ class FrmProFieldFile extends FrmFieldType {
 	}
 
 	/**
-	 * Get the HTML to display an uploaded in a File Upload field
+	 * Get the HTML to display an upload in a File Upload field
 	 *
 	 * @since 3.0
 	 *
 	 * @param int $id
 	 * @param array $atts
-	 * @return string $img_html
+	 * @return string $html
 	 */
-	private function get_file_display( $id, $atts ) {
-		if ( empty( $id ) || ! $this->file_exists_by_id( $id ) ) {
+	public function get_file_display( $id, $atts ) {
+		if ( ! $id || ! $this->file_exists_by_id( $id ) ) {
 			return '';
 		}
 
-		$img_html = $image_url = '';
-		$image = wp_get_attachment_image_src( $id, $atts['size'], false );
-		$is_non_image = ! wp_attachment_is_image( $id );
+		$is_image = wp_attachment_is_image( $id );
+		$url      = FrmProFileField::get_file_url( $id, $is_image ? $atts['size'] : false );
 
-		if ( $atts['show_image'] ) {
-			$img_html = wp_get_attachment_image( $id, $atts['size'], $is_non_image );
-		}
+		if ( ! FrmProFileField::user_has_permission( $id ) ) {
+			$frm_settings = FrmAppHelper::get_settings();
+			$html         = $frm_settings->admin_permission;
+		} else {
+			$html = $atts['show_image'] ? wp_get_attachment_image( $id, $atts['size'], ! $is_image ) : '';
 
-		// If show_filename=1 is included
-		if ( $atts['show_filename'] ) {
-			$label = $this->get_single_file_name( $id );
-			if ( $atts['show_image'] ) {
-				$img_html .= ' <span id="frm_media_' . absint( $id ) . '" class="frm_upload_label">' . $label . '</span>';
-			} else {
-				$img_html .= $label;
-			}
-		}
-
-		// If neither show_image or show_filename are included, get file URL
-		if ( empty( $img_html ) ) {
-			if ( $is_non_image ) {
-				$img_html = $image_url = wp_get_attachment_url( $id );
-			} else {
-				$img_html = $image['0'];
-			}
-		}
-
-		// If add_link=1 is included
-		if ( $atts['add_link'] || ( $is_non_image && $atts['add_link_for_non_image'] ) ) {
-
-			$target = '';
-			if ( isset( $atts['new_tab'] ) && $atts['new_tab'] ) {
-				$target = ' target="_blank"';
+			// If show_filename=1 is included
+			if ( $atts['show_filename'] ) {
+				$label = $this->get_single_file_name( $id );
+				if ( $atts['show_image'] ) {
+					$html .= ' <span id="frm_media_' . absint( $id ) . '" class="frm_upload_label">' . $label . '</span>';
+				} else {
+					$html .= $label;
+				}
 			}
 
-			if ( empty( $image_url ) ) {
-				$image_url = wp_get_attachment_url( $id );
+			// If neither show_image or show_filename are included, get file URL
+			if ( ! $html ) {
+				$html = $url;
 			}
 
-			$img_html = '<a href="' . esc_url( $image_url ) . '" class="frm_file_link"' . $target . '>' . $img_html . '</a>';
+			// If add_link=1 is included
+			if ( $atts['add_link'] || ( ! $is_image && $atts['add_link_for_non_image'] ) ) {
+				$href   = $is_image ? FrmProFileField::get_file_url( $id ) : $url;
+				$target = ! empty( $atts['new_tab'] ) ? ' target="_blank"' : '';
+				$html   = '<a href="' . esc_url( $href ) . '" class="frm_file_link"' . $target . '>' . $html . '</a>';
+			}
+
+			if ( ! empty( $atts['class'] ) ) {
+				$html = str_replace( ' class="', ' class="' . esc_attr( $atts['class'] . ' ' ), $html );
+			}
 		}
 
 		$atts['media_id'] = $id;
-		return apply_filters( 'frm_image_html_array', $img_html, $atts );
+		return apply_filters( 'frm_image_html_array', $html, $atts );
 	}
 
 	/**
@@ -319,16 +335,11 @@ class FrmProFieldFile extends FrmFieldType {
 	 *
 	 * @since 3.0
 	 * @param $id
-	 *
-	 * @return bool
+	 * @return bool true if a post exists with the specified id that has the 'attachment' post_type
 	 */
 	private function file_exists_by_id( $id ) {
 		global $wpdb;
-
-		$query = $wpdb->prepare( 'SELECT post_type FROM ' . $wpdb->posts . ' WHERE ID=%d', $id );
-		$type = $wpdb->get_var( $query );
-
-		return ( $type === 'attachment' );
+		return 'attachment' === FrmDb::get_var( $wpdb->posts, array( 'ID' => $id ), 'post_type' );
 	}
 
 	/**
@@ -362,6 +373,9 @@ class FrmProFieldFile extends FrmFieldType {
 			$file_name = 'file' . $field['id'] . '-' . $repeat_meta;
 			unset( $repeat_meta );
 		}
+
+		$aria = '';
+		$this->add_aria_description( $args, $aria );
 
 		ob_start();
 		include( FrmProAppHelper::plugin_path() . '/classes/views/frmpro-fields/front-end/file.php' );
@@ -414,7 +428,7 @@ class FrmProFieldFile extends FrmFieldType {
 
 			if ( ! is_numeric( $m ) ) {
 				//get the ID from the URL if on this site
-				$m = FrmDb::get_col( $wpdb->posts, array( 'guid' => $m ), 'ID' );
+				$m = FrmDb::get_var( $wpdb->posts, array( 'guid' => $m ), 'ID' );
 			}
 
 			if ( ! is_numeric( $m ) ) {
@@ -427,5 +441,155 @@ class FrmProFieldFile extends FrmFieldType {
 		}
 
 		return $value;
+	}
+
+	/**
+	 * After sanitizing our data, ensure it comes back in the same format it went in as
+	 *
+	 * @param mixed $value
+	 * @param array $new_value
+	 * @param bool $was_array
+	 */
+	private function adjust_value( &$value, $new_value, $was_array ) {
+		$value = $new_value;
+		if ( ! $was_array ) {
+			if ( $value ) {
+				$value = reset( $value );
+			} else {
+				$value = '';
+			}
+		}
+	}
+
+	/**
+	 * Filter out attachments to only include temporary formidable files
+	 *
+	 * @since 4.0.04
+	 * @param mixed $value
+	 */
+	public function sanitize_value( &$value ) {
+		$form              = FrmForm::getOne( $this->field->form_id );
+		$form_is_protected = FrmProFileField::get_option( $form->parent_form_id ? $form->parent_form_id : $form->id, 'protect_files', 0 );
+
+		if ( ! $form_is_protected ) {
+			return;
+		}
+
+		$stop_sanitizing = apply_filters( 'frm_stop_file_switching', false, array( 'form_id' => $this->field->form_id ) );
+
+		if ( $stop_sanitizing ) {
+			return;
+		}
+
+		$this->entry_id  = FrmAppHelper::get_param( 'id', '', 'post', 'absint' );
+		$entry_id        = $this->entry_id;
+		$was_array       = is_array( $value );
+		$assigned_ids    = array();
+		$unsafe_file_ids = array_filter( array_map( 'absint', (array) $value ) );
+
+		if ( ! $unsafe_file_ids ) {
+			$this->adjust_value( $value, array(), $was_array );
+			return;
+		}
+
+		if ( $entry_id ) {
+			$assigned_ids              = self::get_assigned_file_ids( $unsafe_file_ids );
+			$all_ids_have_been_matched = count( $assigned_ids ) === count( $unsafe_file_ids );
+			if ( $all_ids_have_been_matched ) {
+				$this->adjust_value( $value, $assigned_ids, $was_array );
+				return;
+			}
+		}
+
+		$default_ids   = $this->get_default_file_ids( $unsafe_file_ids );
+		$temporary_ids = $this->get_temporary_ids( $unsafe_file_ids );
+
+		$this->adjust_value( $value, array_merge( $assigned_ids, $default_ids, $temporary_ids ), $was_array );
+	}
+
+	/**
+	 * Given a set of file ids, check field default_valies for ids that actually match this field
+	 *
+	 * @param array $unsafe_file_ids
+	 * @return array
+	 */
+	private function get_default_file_ids( $unsafe_file_ids ) {
+		$default_value = maybe_unserialize( $this->field->default_value );
+		if ( is_string( $default_value ) ) {
+			$default_value = do_shortcode( $default_value );
+		}
+		$default_ids = array_filter( array_map( 'absint', (array) $default_value ) );
+		if ( $default_ids ) {
+			$default_ids = array_intersect( $default_ids, $unsafe_file_ids );
+		}
+		return $default_ids;
+	}
+
+	/**
+	 * Given a set of file ids, check frm_item_metas for ids that actually match this field
+	 *
+	 * @param array $unsafe_file_ids
+	 * @return array
+	 */
+	private function get_assigned_file_ids( $unsafe_file_ids ) {
+		$assigned_ids = array();
+		$conditions   = array( 'or' => 1 );
+		foreach ( $unsafe_file_ids as $file_id ) {
+			$conditions[] = array(
+				'or'              => 1,
+				'meta_value'      => $file_id,
+				'meta_value LIKE' => array( 'i:' . $file_id . ';', ':"' . $file_id . '"' ),
+			);
+		}
+
+		$item_ids   = FrmDb::get_col( 'frm_items', array( 'parent_item_id' => $this->entry_id ) );
+		$item_ids[] = $this->entry_id;
+
+		$where = array(
+			'field_id' => $this->field->id,
+			'item_id'  => $item_ids,
+			$conditions,
+		);
+		$metas = FrmDb::get_col( 'frm_item_metas', $where, 'meta_value' );
+
+		foreach ( $metas as $meta ) {
+			FrmProAppHelper::unserialize_or_decode( $meta );
+			$meta_file_ids = array_map( 'intval', (array) $meta );
+			$assigned_ids  = array_merge( array_intersect( $meta_file_ids, $unsafe_file_ids ), $assigned_ids );
+		}
+
+		return $assigned_ids;
+	}
+
+	/**
+	 * Given a set of file ids, check wp_postmeta for ids that actually match this field
+	 *
+	 * @param array $unsafe_file_ids
+	 * @return array
+	 */
+	private function get_temporary_ids( $unsafe_file_ids ) {
+		global $wpdb;
+
+		// only include posts with a user id match
+		// if a user is not logged in, user id is 0 (and will only match with guest files)
+		$where         = array(
+			'ID'          => $unsafe_file_ids,
+			'post_author' => get_current_user_id(),
+		);
+		$temporary_ids = FrmDb::get_col( $wpdb->posts, $where, 'ID' );
+
+		if ( ! $temporary_ids ) {
+			return array();
+		}
+
+		return FrmDb::get_col(
+			$wpdb->postmeta,
+			array(
+				'post_id'    => $temporary_ids,
+				'meta_key'   => '_frm_temporary',
+				'meta_value' => $this->field->id,
+			),
+			'post_id'
+		);
 	}
 }

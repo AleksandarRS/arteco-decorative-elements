@@ -28,7 +28,7 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         <h1><?php _e('Naši proizvodi i usluge','ade'); ?></h1>
                     </header>
                 </div>
-                <div class="four-items-description-item col-md-4">
+                <div class="four-items-description-item col-md-3">
                     <?php if ( $icon ) : ?>
                         <div class="four-items-item-icon">
                             <i class="icon icon-<?php echo $icon; ?>"></i>
@@ -45,11 +45,77 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $read_more_link ) : ?>
-                        <div class="four-items-item-title">
-                            <a href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        <div class="four-items-item-read-more read-more-button-wrap">
+                            <a class="button button-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?></a>
                         </div>
                     <?php endif; ?>
-                </div> <!-- /.four-items-description-item col-md-4 -->
+                </div> <!-- /.four-items-description-item col-md-3 -->
+                <div class="four-items-description-item col-md-3">
+                    <?php if ( $icon_s ) : ?>
+                        <div class="four-items-item-icon">
+                            <i class="icon icon-<?php echo $icon_s; ?>"></i>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $title_s ) : ?>
+                        <div class="four-items-item-title">
+                            <h3><?php echo $title_s; ?></h3>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $text_description_s ) : ?>
+                        <div class="four-items-item-description">
+                            <p><?php echo $text_description_s; ?></p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $read_more_link_s ) : ?>
+                        <div class="four-items-item-read-more read-more-button-wrap">
+                            <a class="button button-primary" href="<?php echo $read_more_link_s; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        </div>
+                    <?php endif; ?>
+                </div> <!-- /.four-items-description-item col-md-3 -->
+                <div class="four-items-description-item col-md-3">
+                    <?php if ( $icon_t ) : ?>
+                        <div class="four-items-item-icon">
+                            <i class="icon icon-<?php echo $icon_t; ?>"></i>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $title_t ) : ?>
+                        <div class="four-items-item-title">
+                            <h3><?php echo $title_t; ?></h3>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $text_description_t ) : ?>
+                        <div class="four-items-item-description">
+                            <p><?php echo $text_description_t; ?></p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $read_more_link_t ) : ?>
+                        <div class="four-items-item-read-more read-more-button-wrap">
+                            <a class="button button-primary" href="<?php echo $read_more_link_t; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        </div>
+                    <?php endif; ?>
+                </div> <!-- /.four-items-description-item col-md-3 -->
+                <div class="four-items-description-item col-md-3">
+                    <?php if ( $icon_f ) : ?>
+                        <div class="four-items-item-icon">
+                            <i class="icon icon-<?php echo $icon_f; ?>"></i>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $title_f ) : ?>
+                        <div class="four-items-item-title">
+                            <h3><?php echo $title_f; ?></h3>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $text_description_f ) : ?>
+                        <div class="four-items-item-description">
+                            <p><?php echo $text_description_f; ?></p>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ( $read_more_link_f ) : ?>
+                        <div class="four-items-item-read-more read-more-button-wrap">
+                            <a class="button button-primary" href="<?php echo $read_more_link_f; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        </div>
+                    <?php endif; ?>
+                </div> <!-- /.four-items-description-item col-md-3 -->
             </div> <!-- /.row -->
         </div> <!-- /.container -->
         

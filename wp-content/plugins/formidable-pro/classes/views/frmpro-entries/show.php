@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+?>
 <div class="postbox" id="frm_comment_list">
 	<h3 class="hndle"><span><?php esc_html_e( 'Comments/Notes', 'formidable-pro' ) ?></span></h3>
     <div class="inside">
@@ -18,7 +23,9 @@
             </tr>
         <?php } ?>
         </table>
-		<a href="#" class="button-secondary alignright frm_show_comment" data-frmtoggle="#frm_comment_form">+ <?php esc_html_e( 'Add Note/Comment', 'formidable-pro' ) ?></a>
+		<a href="#" class="button-secondary frm-button-secondary frm_show_comment" data-frmtoggle="#frm_comment_form">
+			+ <?php esc_html_e( 'Add Note/Comment', 'formidable-pro' ); ?>
+		</a>
         <div class="clear"></div>
 
         <form action="<?php echo esc_url( '?page=formidable-entries&frm_action=show&id=' . absint( $entry->id ) . '#frm_comment_form' ) ?>" name="frm_comment_form" id="frm_comment_form" method="post" class="frm_hidden frm_no_print">

@@ -1,5 +1,9 @@
-
-<h3><?php _e( 'Pagination', 'formidable-pro' ) ?></h3>
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+?>
+<h3><?php esc_html_e( 'Pagination', 'formidable-pro' ); ?></h3>
 <table class="form-table">
 	<tr>
 		<td>

@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	die( 'You are not allowed to call this page directly.' );
+}
+?>
 <div class="frm_multi_fields_container frm_grid_container">
 	<?php foreach ( $sub_fields as $key => $sub_field ) { ?>
 		<div id="frm_field_<?php echo esc_attr( $field['id'] . '-' . $key ); ?>_container" class="frm_form_field form-field <?php echo esc_attr( $sub_field['classes'] ); ?>">
@@ -17,16 +22,20 @@
 				if ( ! isset( $remove_names ) || ! $remove_names ) {
 					echo ' name="' . esc_attr( $field_name ) . '[' . esc_attr( $key ) . ']" ';
 				}
+				FrmProComboFieldsController::add_atts_to_input( compact( 'field', 'sub_field', 'key' ) );
 				?> class="dyn_default_value" />
 			<?php
 			}
-
+			?>
+			<div class="frm_description" id="field_<?php echo esc_attr( $key . '_desc_' . $field['id'] ); ?>">
+			<?php
 			if ( $sub_field['label'] ) {
 				FrmProAddressesController::include_sub_label( array(
-					'field' => $field, 'option_name' => $key . '_desc'
+					'field' => $field, 'option_name' => $key . '_desc',
 				) );
 			}
 			?>
+			</div>
 		</div>
 	<?php } ?>
 </div>

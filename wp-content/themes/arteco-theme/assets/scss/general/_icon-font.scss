@@ -1,7 +1,6 @@
 @font-face {
 	font-family: "font-icons";
-	src: url('../assets/fonts/font-icons/font-icons.woff2') format('woff2'), url('../assets/fonts/font-icons/font-icons.woff') format('woff'), url('../assets/fonts/font-icons/font-icons.ttf') format('truetype');
-	font-display: swap;
+	src: url('../assets/fonts/font-icons/font-icons.woff2') format('woff2'), url('../assets/fonts/font-icons/font-icons.woff') format('woff'), url('../assets/fonts/font-icons/font-icons.ttf') format('truetype');;
 }
 
 @mixin icon-styles {
@@ -35,6 +34,45 @@
 	@if $filename == angle-up {
 		$char: "\E004";
 	}
+	@if $filename == chimney {
+		$char: "\E005";
+	}
+	@if $filename == facebook {
+		$char: "\E006";
+	}
+	@if $filename == google-plus-g {
+		$char: "\E007";
+	}
+	@if $filename == industry {
+		$char: "\E008";
+	}
+	@if $filename == instagram {
+		$char: "\E009";
+	}
+	@if $filename == linkedin {
+		$char: "\E00A";
+	}
+	@if $filename == pinterest {
+		$char: "\E00B";
+	}
+	@if $filename == puzzle-piece {
+		$char: "\E00C";
+	}
+	@if $filename == search {
+		$char: "\E00D";
+	}
+	@if $filename == toolbox {
+		$char: "\E00E";
+	}
+	@if $filename == twitter {
+		$char: "\E00F";
+	}
+	@if $filename == warehouse-alt {
+		$char: "\E010";
+	}
+	@if $filename == youtube {
+		$char: "\E011";
+	}
 
 	@return $char;
 }
@@ -62,4 +100,42 @@
 .icon-angle-up {
 	@include icon(angle-up);
 }
-
+.icon-chimney {
+	@include icon(chimney);
+}
+.icon-facebook {
+	@include icon(facebook);
+}
+.icon-google-plus-g {
+	@include icon(google-plus-g);
+}
+.icon-industry {
+	@include icon(industry);
+}
+.icon-instagram {
+	@include icon(instagram);
+}
+.icon-linkedin {
+	@include icon(linkedin);
+}
+.icon-pinterest {
+	@include icon(pinterest);
+}
+.icon-puzzle-piece {
+	@include icon(puzzle-piece);
+}
+.icon-search {
+	@include icon(search);
+}
+.icon-toolbox {
+	@include icon(toolbox);
+}
+.icon-twitter {
+	@include icon(twitter);
+}
+.icon-warehouse-alt {
+	@include icon(warehouse-alt);
+}
+.icon-youtube {
+	@include icon(youtube);
+}
