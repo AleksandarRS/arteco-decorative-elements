@@ -38,7 +38,8 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "gulp-iconfont": "^9.0.2",
-    "gulp-iconfont-css": "^2.1.0"
+    "gulp-iconfont-css": "^2.1.0",
+    "slick-carousel": "1.8.1"
   },
   "sasslintConfig": "sass-lint.yml",
   "scripts": {

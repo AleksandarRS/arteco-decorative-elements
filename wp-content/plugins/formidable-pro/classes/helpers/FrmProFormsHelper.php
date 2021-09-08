@@ -390,13 +390,20 @@ echo $custom_options;
 	 * @return bool
 	 */
 	private static function has_variable_html_id( $field ) {
-		if ( in_array( $field->type, array( 'radio', 'scale', 'star', 'checkbox' ) )
-			 || ( in_array( $field->type, array( 'lookup', 'product' ) ) && in_array( $field->field_options['data_type'], array( 'radio', 'checkbox' ) ) )
-		) {
-			return true;
-		} else {
-			return false;
-		}
+		$is_radio_check = in_array( $field->type, array( 'radio', 'scale', 'star', 'checkbox' ), true );
+		$is_other_radio = in_array( $field->type, array( 'lookup', 'product' ), true ) && in_array( $field->field_options['data_type'], array( 'radio', 'checkbox' ), true );
+
+		$has_variable_html_id = $is_radio_check || $is_other_radio;
+
+		/**
+		 * Allows modifying a field has variable HTML id or not.
+		 *
+		 * @since 5.0.02
+		 *
+		 * @param array $has_variable_html_id Has variable HTML id or not.
+		 * @param array $args                 Arguments. Contains `field`.
+		 */
+		return apply_filters( 'frm_pro_field_has_variable_html_id', $has_variable_html_id, compact( 'field' ) );
 	}
 
 	/**

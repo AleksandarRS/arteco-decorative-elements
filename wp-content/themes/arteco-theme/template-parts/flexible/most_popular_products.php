@@ -6,7 +6,7 @@ $main_title = get_sub_field('main_title');
     <div class="most-popular-products-section-wrapper">
         <div class="container">
             <div class="row most-popular-products-row">
-                <div class="col-md-12 main-title-section-heading">
+                <div class="col-md-12 main-title-section-heading align-center">
                     <header>
                         <h1><?php echo $main_title; ?></h1>
                     </header>
@@ -42,11 +42,6 @@ $main_title = get_sub_field('main_title');
                         // Reset the global post object so that the rest of the page works correctly.
                         wp_reset_postdata(); ?>
                 <?php endif; ?>
-                
-
-                        
-
-                    
 
             </div> <!-- /.row most-popular-products-row -->
         </div> <!-- /.container -->

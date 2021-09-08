@@ -23,7 +23,7 @@ $read_more_link_f = get_sub_field('read_more_link_f');
     <div class="four-items-section-media-wrap">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 main-title-section-heading">
+                <div class="col-md-12 main-title-section-heading align-center">
                     <header>
                         <h1><?php _e('Naši proizvodi i usluge','ade'); ?></h1>
                     </header>

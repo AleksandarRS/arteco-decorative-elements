@@ -71,6 +71,7 @@ class FrmProFieldValue extends FrmFieldValue {
 		$this->displayed_value = $this->saved_value;
 
 		unset( $atts['class'] ); // This shouldn't be used on values.
+		$atts['entry'] = $this->entry;
 
 		if ( $this->has_child_entries() ) {
 			$this->prepare_displayed_value_for_field_with_child_entries( $atts );

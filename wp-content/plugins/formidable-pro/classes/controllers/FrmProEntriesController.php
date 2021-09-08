@@ -2483,12 +2483,14 @@ class FrmProEntriesController {
 				'label'          => __( 'Edit', 'formidable-pro' ),
 				'cancel'         => __( 'Cancel', 'formidable-pro' ),
 				'class'          => '',
-				'page_id'        => ( $post ? $post->ID : 0 ), 'html_id' => false,
+				'page_id'        => ( $post ? $post->ID : 0 ),
+				'html_id'        => false,
 				'prefix'         => '',
 				'form_id'        => false,
 				'title'          => '',
 				'fields'         => array(),
 				'exclude_fields' => array(),
+				'start_page'     => 1,
 			),
 			$atts
 		);
@@ -2553,12 +2555,13 @@ class FrmProEntriesController {
 		self::load_form_scripts();
 
 		$data = array(
-			'entryid' => $entry_id,
-			'prefix'  => $atts['prefix'],
-			'pageid'  => $atts['page_id'],
-			'formid'  => $atts['form_id'],
-			'cancel'  => $atts['cancel'],
-			'edit'    => $atts['label'],
+			'entryid'   => $entry_id,
+			'prefix'    => $atts['prefix'],
+			'pageid'    => $atts['page_id'],
+			'formid'    => $atts['form_id'],
+			'cancel'    => $atts['cancel'],
+			'edit'      => $atts['label'],
+			'startpage' => $atts['start_page'],
 		);
 		if ( ! empty( $atts['fields'] ) ) {
 			$data['fields'] = implode( ',', (array) $atts['fields'] );
@@ -3202,10 +3205,11 @@ class FrmProEntriesController {
 
 	public static function edit_entry_ajax() {
 		$id             = FrmAppHelper::get_param( 'id', '', 'post', 'absint' );
-		$entry_id       = FrmAppHelper::get_param('entry_id', 0, 'post', 'absint' );
+		$entry_id       = FrmAppHelper::get_param( 'entry_id', 0, 'post', 'absint' );
 		$post_id        = FrmAppHelper::get_param( 'post_id', 0, 'post', 'sanitize_title' );
 		$fields         = FrmAppHelper::get_param( 'fields', array(), 'post', 'sanitize_text_field' );
 		$exclude_fields = FrmAppHelper::get_param( 'exclude_fields', array(), 'post', 'sanitize_text_field' );
+		$start_page     = FrmAppHelper::get_param( 'start_page', 1, 'post', 'absint' );
 
 		global $frm_vars;
 		$frm_vars['footer_loaded'] = true;
@@ -3215,20 +3219,211 @@ class FrmProEntriesController {
 			$_GET['entry'] = $entry_id;
 		}
 
-		if ( $post_id && is_numeric($post_id) ) {
+		if ( $post_id && is_numeric( $post_id ) ) {
 			global $post;
 			if ( ! $post ) {
-				$post = get_post($post_id);
+				$post = get_post( $post_id );
 			}
 		}
 
 		FrmProFormsController::mark_jquery_as_loaded();
 
-		echo FrmFormsController::get_form_shortcode( compact( 'id', 'entry_id', 'fields', 'exclude_fields' ) );
+		$atts = compact( 'id', 'entry_id', 'fields', 'exclude_fields' );
+
+		if ( 1 !== $start_page ) {
+			self::maybe_set_page_from_attribute( $id, $start_page );
+		} else {
+			self::maybe_set_page( $atts );
+		}
+
+		echo FrmFormsController::get_form_shortcode( $atts );
 
 		FrmProFormsController::print_ajax_scripts( 'all' );
 
 		wp_die();
+	}
+
+	/**
+	 * @param int $form_id
+	 * @param int $start_page
+	 */
+	private static function maybe_set_page_from_attribute( $form_id, $start_page ) {
+		$start_page_order = self::get_order_of_start_page_attribute( $form_id, $start_page );
+		if ( $start_page_order > 1 ) {
+			self::set_page( $form_id, $start_page_order );
+		}
+	}
+
+	/**
+	 * @param int $form_id
+	 * @param int $page
+	 * @return int
+	 */
+	private static function get_order_of_start_page_attribute( $form_id, $page ) {
+		$page_break_orders = self::get_page_break_orders( $form_id );
+		$index             = $page - 2; // offset by 2 because the first page break is not a real field and arrays are 0 indexed.
+		return array_key_exists( $index, $page_break_orders ) ? $page_break_orders[ $index ] : 1;
+	}
+
+	/**
+	 * @param int $form_id
+	 * @param int $page_break_order
+	 */
+	private static function set_page( $form_id, $page_break_order ) {
+		$_POST[ 'frm_page_order_' . $form_id ] = $page_break_order;
+	}
+
+	/**
+	 * @param array $atts including keys id (form id), entry_id, fields, exclude_fields.
+	 */
+	private static function maybe_set_page( $atts ) {
+		$page = self::get_page_from_attributes( $atts );
+		if ( 1 !== $page ) {
+			self::set_page( $atts['id'], $page );
+		}
+	}
+
+	/**
+	 * @param array $atts including keys id (form id), entry_id, fields, exclude_fields.
+	 * @return int the page break field order to start on.
+	 */
+	private static function get_page_from_attributes( $atts ) {
+		$page = 1;
+
+		if ( empty( $atts['id'] ) || ( empty( $atts['fields'] ) && empty( $atts['exclude_fields'] ) ) ) {
+			// return the first page if information is missing or all fields are present.
+			return $page;
+		}
+
+		$form_id           = $atts['id'];
+		$page_break_orders = self::get_page_break_orders( $form_id );
+
+		if ( ! $page_break_orders ) {
+			// stop if there are no page breaks for this form.
+			return $page;
+		}
+
+		$first_field_order = self::get_order_of_first_field( $atts );
+
+		foreach ( $page_break_orders as $page_break_order ) {
+			if ( $page_break_order > $first_field_order ) {
+				break;
+			}
+			$page = $page_break_order;
+		}
+
+		return $page;
+	}
+
+	/**
+	 * @param int $form_id
+	 * @return array<int> field orders for all page break fields.
+	 */
+	private static function get_page_break_orders( $form_id ) {
+		return FrmDb::get_col(
+			'frm_fields',
+			array(
+				'type'    => 'break',
+				'form_id' => $form_id,
+			),
+			'field_order',
+			array(
+				'order_by' => 'field_order',
+			)
+		);
+	}
+
+	/**
+	 * Get the field_order of the first field based off of what is included and excluded with field attributes.
+	 *
+	 * @param array $atts including keys id (form id), entry_id, fields, exclude_fields.
+	 * @return int the lowest field_order value from the set of fields.
+	 */
+	private static function get_order_of_first_field( $atts ) {
+		$includes = ! empty( $atts['fields'] ) ? self::create_id_key_condition_pair( $atts['fields'] ) : array();
+		$excludes = ! empty( $atts['exclude_fields'] ) ? self::create_id_key_condition_pair( $atts['exclude_fields'], false ) : array();
+		$where    = self::build_where_for_first_field_check( $atts['id'], $includes, $excludes );
+		$args     = array( 'order_by' => 'field_order' );
+		return FrmDb::get_var( 'frm_fields', $where, 'field_order', $args );
+	}
+
+	/**
+	 * @param array|string $fields
+	 * @param bool         $include
+	 * @return array
+	 */
+	private static function create_id_key_condition_pair( $fields, $include = true ) {
+		$fields = self::maybe_explode( $fields );
+		$ids    = self::pull_ids( $fields );
+		$keys   = self::pull_keys( $fields );
+		$pair   = array();
+		$suffix = $include ? '' : ' not';
+
+		if ( $ids ) {
+			$pair[ 'id' . $suffix ] = $ids;
+		}
+
+		if ( $keys ) {
+			$pair[ 'field_key' . $suffix ] = $keys;
+			if ( $ids ) {
+				$pair['or'] = 1;
+			}
+		}
+
+		return $pair;
+	}
+
+	/**
+	 * @param int $form_id
+	 * @param array $includes
+	 * @param array $excludes
+	 * @return array
+	 */
+	private static function build_where_for_first_field_check( $form_id, $includes, $excludes ) {
+		$where = array();
+
+		if ( $includes ) {
+			$where[] = $includes;
+		}
+
+		if ( $excludes ) {
+			$where[] = $excludes;
+		}
+
+		$where[] = array(
+			'form_id' => $form_id,
+			'type !'  => 'break',
+		);
+
+		return $where;
+	}
+
+	/**
+	 * @param array|string $ids
+	 */
+	private static function maybe_explode( $ids ) {
+		return is_array( $ids ) ? $ids : explode( ',', $ids );
+	}
+
+	/**
+	 * @param array $values
+	 * @return array<int> ids
+	 */
+	private static function pull_ids( $values ) {
+		return array_filter( $values, 'is_numeric' );
+	}
+
+	/**
+	 * @param array $values
+	 * @return array<string> keys
+	 */
+	private static function pull_keys( $values ) {
+		return array_filter(
+			$values,
+			function( $value ) {
+				return ! is_numeric( $value );
+			}
+		);
 	}
 
 	public static function update_field_ajax() {

@@ -1428,7 +1428,10 @@ function frmProFormJS() {
 	}
 
 	function showFieldContainer( containerId ) {
-		jQuery( '#' + containerId ).show();
+		var $container = jQuery( '#' + containerId ).show();
+		if ( $container.hasClass( 'frm_inside_container' ) && null === $container.find( 'select' ).val() ) {
+			$container.find( 'select' ).val( '' ).trigger( 'change' );
+		}
 	}
 
 	/**
@@ -4415,6 +4418,7 @@ function frmProFormJS() {
 			cancel = $edit.data( 'cancel' ),
 			fields = $edit.data( 'fields' ),
 			excludeFields = $edit.data( 'excludefields' ),
+			startPage = $edit.data( 'startpage' ),
 			$cont = jQuery( document.getElementById( prefix + entryId ) ),
 			orig = $cont.html();
 
@@ -4424,9 +4428,14 @@ function frmProFormJS() {
 			url: frm_js.ajax_url,
 			dataType: 'html',
 			data: {
-				action: 'frm_entries_edit_entry_ajax', post_id: postId,
-				entry_id: entryId, id: formId, nonce: frm_js.nonce,
-				fields: fields, exclude_fields: excludeFields,
+				action: 'frm_entries_edit_entry_ajax',
+				post_id: postId,
+				entry_id: entryId,
+				id: formId,
+				nonce: frm_js.nonce,
+				fields: fields,
+				exclude_fields: excludeFields,
+				start_page: startPage
 			},
 			success: function( html ) {
 				$cont.children( '.frm-loading-img' ).replaceWith( html );

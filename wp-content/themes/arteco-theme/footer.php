@@ -10,6 +10,22 @@
 ?>
 			</div><!-- #content -->
 
+			<section class="newsletter-section">
+				<div class="newsletter-section-wrapper">
+					<div class="newsletter-section-inner">
+						<div class="container">
+							<div class="row newsletter-row">
+								<div class="col-md-12 align-center newsletter-cta">
+									<?php echo do_shortcode('[mc4wp_form id="180"]'); ?>
+								</div>
+									
+							</div>
+						</div>
+							
+					</div>
+				</div>
+			</section>
+
 			<footer id="colophon" class="site-footer" role="contentinfo">
 				<div class="widget-wrapper">
 					<div class="container">

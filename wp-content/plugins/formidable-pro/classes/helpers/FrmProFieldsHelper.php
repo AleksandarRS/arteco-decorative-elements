@@ -2290,6 +2290,48 @@ class FrmProFieldsHelper {
 		if ( FrmField::is_option_true( $field, 'conf_field' ) ) {
 			$html .= self::get_confirmation_field_html( $field, $atts );
 		}
+		if ( 'html' === FrmField::get_option( $field, 'type' ) ) {
+			$html = self::maybe_replace_if_shortcodes( $html, $field );
+		}
+		return $html;
+	}
+
+	/**
+	 * @param string $html
+	 * @param array  $html_field
+	 * @return string
+	 */
+	private static function maybe_replace_if_shortcodes( $html, $html_field ) {
+		if ( false === strpos( $html, '[if' ) ) {
+			// only try if there are if shortcodes present.
+			return $html;
+		}
+
+		$form_id    = $html_field['form_id'];
+		$shortcodes = FrmProDisplaysHelper::get_shortcodes( $html, $form_id );
+		$html_field = FrmField::getOne( $html_field['id'] ); // change $html_field to an object because get_observed_logic_value expects an object.
+
+		foreach ( $shortcodes[0] as $short_key => $tag ) {
+			$conditional = preg_match( '/^\[if/s', $tag ) ? true : false;
+
+			if ( ! $conditional ) {
+				continue;
+			}
+
+			$foreach         = false;
+			$field_id_or_key = FrmShortcodeHelper::get_shortcode_tag( $shortcodes, $short_key, compact( 'conditional', 'foreach' ) );
+
+			$field = FrmField::getOne( $field_id_or_key );
+			if ( ! $field ) {
+				continue;
+			}
+
+			$atts              = FrmShortcodeHelper::get_shortcode_attribute_array( $shortcodes[3][ $short_key ] );
+			$atts['short_key'] = $tag;
+			$replace_with      = self::get_observed_logic_value( $html_field, $_POST, $field->id );
+
+			FrmProContent::check_conditional_shortcode( $html, $replace_with, $atts, $field_id_or_key, 'if', array( 'field' => $field ) );
+		}
 
 		return $html;
 	}
@@ -2712,7 +2754,7 @@ class FrmProFieldsHelper {
 	}
 
 	/**
-	 * Checks if should use display value for the linked field.
+	 * Checks if it should use display value for the linked field.
 	 *
 	 * @param object|false $linked_field Linked field object of false.
 	 * @param array        $atts         Atts.
@@ -2724,7 +2766,16 @@ class FrmProFieldsHelper {
 			return false;
 		}
 
-		if ( in_array( $linked_field->type, array( 'date' ), true ) && self::doing_csv_export() ) {
+		if ( ! self::doing_csv_export() ) {
+			return true;
+		}
+
+		if ( in_array( $linked_field->type, array( 'date' ), true ) ) {
+			return false;
+		}
+
+		$post_field = isset( $linked_field->field_options['post_field'] ) ? $linked_field->field_options['post_field'] : '';
+		if ( in_array( $linked_field->type, array( 'rte', 'textarea' ), true ) && in_array( $post_field, array( 'post_content', 'post_excerpt' ) ) ) {
 			return false;
 		}
 
@@ -2791,6 +2842,10 @@ class FrmProFieldsHelper {
 				unset( $atts['show_info'] );
 			}
 
+			if ( 'file' === $linked_field->type && ! isset( $atts['size'] ) ) {
+				// Prevent using thumbnail size, causes a different URL and can't query from the database.
+				$atts['size'] = 'full';
+			}
 			$value = FrmFieldsHelper::get_display_value( $value, $linked_field, $atts );
 		}
 	}

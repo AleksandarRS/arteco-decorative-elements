@@ -2197,6 +2197,68 @@ class FrmProGraphsController {
 	}
 
 	/**
+	 * Get a list of boxes to list with the graph on the reports page.
+	 *
+	 * @since 5.0.02
+	 */
+	public static function get_field_boxes( $args ) {
+		$field   = $args['field'];
+		$total   = FrmProStatisticsController::stats_shortcode(
+			array(
+				'id'   => $field->id,
+				'type' => 'count',
+			)
+		);
+
+		if ( ! $total ) {
+			return array();
+		}
+
+		$post_boxes = array(
+			array(
+				'label' => __( 'Answered', 'formidable-pro' ),
+				'stat'  => $total . ' (' . round( ( $total / count( $args['entries'] ) ) * 100, 2 ) . '%)',
+			),
+		);
+
+		self::add_average_box( $args, $post_boxes );
+
+		return apply_filters( 'frm_pro_reports_boxes', $post_boxes, $args );
+	}
+
+	/**
+	 * Add the Average and Median reports for some field types.
+	 *
+	 * @since 5.0.02
+	 */
+	private static function add_average_box( $args, &$post_boxes ) {
+		$field = $args['field'];
+		if ( ! in_array( $field->type, array( 'number', 'hidden', 'scale' ) ) ) {
+			return;
+		}
+
+		$post_boxes[] = array(
+			'label' => __( 'Average', 'formidable-pro' ),
+			'stat'  => FrmProStatisticsController::stats_shortcode(
+				array(
+					'id'   => $field->id,
+					'type' => 'average',
+				)
+			),
+		);
+
+		$post_boxes[] = array(
+			'label' => __( 'Median', 'formidable-pro' ),
+			'stat'  => FrmProStatisticsController::stats_shortcode(
+				array(
+					'id'   => $field->id,
+					'type' => 'median',
+				)
+			),
+		);
+	}
+
+	/**
 	 * Get the form for the reports
 	 *
 	 * @since 2.02.05

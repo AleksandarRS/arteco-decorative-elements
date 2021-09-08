@@ -3674,6 +3674,109 @@ fieldset {
   min-width: 0;
 }
 
+/* Slider */
+.slick-slider {
+  position: relative;
+  display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-touch-action: pan-y;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.slick-list:focus {
+  outline: none;
+}
+
+.slick-list.dragging {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slick-track:before, .slick-track:after {
+  content: "";
+  display: table;
+}
+
+.slick-track:after {
+  clear: both;
+}
+
+.slick-loading .slick-track {
+  visibility: hidden;
+}
+
+.slick-slide {
+  float: left;
+  height: 100%;
+  min-height: 1px;
+  display: none;
+}
+
+[dir="rtl"] .slick-slide {
+  float: right;
+}
+
+.slick-slide img {
+  display: block;
+}
+
+.slick-slide.slick-loading img {
+  display: none;
+}
+
+.slick-slide.dragging img {
+  pointer-events: none;
+}
+
+.slick-initialized .slick-slide {
+  display: block;
+}
+
+.slick-loading .slick-slide {
+  visibility: hidden;
+}
+
+.slick-vertical .slick-slide {
+  display: block;
+  height: auto;
+  border: 1px solid transparent;
+}
+
+.slick-arrow.slick-hidden {
+  display: none;
+}
+
 .select2-container--default {
   color: #000000;
   font-family: "Roboto", sans-serif;
@@ -3876,6 +3979,84 @@ fieldset {
           transform: rotate(71deg);
   bottom: 93px;
   width: 200px;
+}
+
+.services-subpages-list {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  list-style: none;
+  padding-left: 0;
+}
+
+.services-subpages-list .services-subpages-item {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 -webkit-calc(58% - 20px);
+      -ms-flex: 0 0 calc(58% - 20px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          flex-basis: calc(58% - 20px);
+  height: 300px;
+  margin: 10px;
+  max-width: -webkit-calc(58% - 20px);
+  max-width: calc(58% - 20px);
+  position: relative;
+}
+
+.services-subpages-list .services-subpages-item:nth-child(2), .services-subpages-list .services-subpages-item:nth-child(3), .services-subpages-list .services-subpages-item:nth-child(6), .services-subpages-list .services-subpages-item:nth-child(7), .services-subpages-list .services-subpages-item:nth-child(10), .services-subpages-list .services-subpages-item:nth-child(11), .services-subpages-list .services-subpages-item:nth-child(14), .services-subpages-list .services-subpages-item:nth-child(15) {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 -webkit-calc(42% - 20px);
+      -ms-flex: 0 0 calc(42% - 20px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          flex-basis: calc(42% - 20px);
+  max-width: -webkit-calc(42% - 20px);
+  max-width: calc(42% - 20px);
+}
+
+.services-subpages-list .services-subpage-link {
+  display: block;
+  height: 100%;
+}
+
+.services-subpages-list .services-subpage-link .services-subpages-featured-image-position {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  position: relative;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+.services-subpages-list .services-subpage-link .services-subpages-featured-image-position:after {
+  background-color: rgba(48, 48, 48, 0.35);
+  bottom: 0;
+  content: '';
+  display: block;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.services-subpages-list .services-subpage-link .services-subpages-featured-image-position h2 {
+  bottom: 0;
+  color: #ffffff;
+  left: 0;
+  padding: 30px;
+  position: absolute;
+  z-index: 1;
 }
 
 /*# sourceMappingURL=style.css.map */

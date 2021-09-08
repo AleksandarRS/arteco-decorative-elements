@@ -463,4 +463,20 @@ class FrmProEntryFormatter extends FrmEntryFormatter {
 	protected function section_placeholder() {
 		return '{section_placeholder}';
 	}
+
+	protected function add_html_row( $value_args, &$content ) {
+		$value_args['label'] = $this->maybe_process_shortcodes_in_label( $value_args['label'] );
+		parent::add_html_row( $value_args, $content );
+	}
+
+	private function maybe_process_shortcodes_in_label( $label ) {
+		if ( false !== strpos( $label, '[' ) ) {
+			$label = $this->process_shortcodes_in_label( $label );
+		}
+		return $label;
+	}
+
+	private function process_shortcodes_in_label( $label ) {
+		return FrmFieldsHelper::basic_replace_shortcodes( $label, $this->entry->form_id, $this->entry );
+	}
 }

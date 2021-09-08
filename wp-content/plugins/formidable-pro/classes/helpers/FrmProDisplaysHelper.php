@@ -49,7 +49,7 @@ class FrmProDisplaysHelper {
 	private static function get_additional_keys_for_regex( $content, $keys ) {
 		$additional_keys = array();
 		foreach ( $keys as $key ) {
-			if ( false !== strpos( $content, '[' . $key ) ) {
+			if ( false !== strpos( $content, $key ) ) {
 				$additional_keys[] = $key;
 			}
 		}
