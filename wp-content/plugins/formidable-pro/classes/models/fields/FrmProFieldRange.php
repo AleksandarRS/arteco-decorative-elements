@@ -160,7 +160,8 @@ class FrmProFieldRange extends FrmFieldType {
 
 		$min = FrmField::get_option( $this->field, 'minnum' );
 		$max = FrmField::get_option( $this->field, 'maxnum' );
-		$mid = ( $max - $min ) / 2;
+		$mid = ( $max - $min ) / 2 + $min;
+
 		if ( is_int( $mid ) ) {
 			return $mid;
 		}

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Formidable Forms Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Formidable Forms Pro 5.0.02\n"
+"Project-Id-Version: Formidable Forms Pro 5.0.03\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/formidable-pro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-08-25T16:40:38+00:00\n"
+"POT-Creation-Date: 2021-09-08T16:47:32+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: formidable-pro\n"
@@ -259,7 +259,7 @@ msgid "Cancel"
 msgstr ""
 
 #: classes/controllers/FrmProEntriesController.php:2591
-#: classes/controllers/FrmProEntriesController.php:3191
+#: classes/controllers/FrmProEntriesController.php:3206
 #: classes/models/FrmProSettings.php:25
 msgid "Update"
 msgstr ""
@@ -395,8 +395,8 @@ msgstr ""
 msgid "this action if"
 msgstr ""
 
-#: classes/controllers/FrmProFormActionsController.php:496
-#: classes/controllers/FrmProFormActionsController.php:524
+#: classes/controllers/FrmProFormActionsController.php:522
+#: classes/controllers/FrmProFormActionsController.php:550
 msgid "Post type is empty"
 msgstr ""
 
@@ -1619,56 +1619,56 @@ msgstr ""
 msgid "File upload failed"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1368
+#: classes/models/FrmProFileField.php:1395
 msgid "Oops! That file no longer exists"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1370
+#: classes/models/FrmProFileField.php:1397
 msgid "Oops! That file is protected"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1618
+#: classes/models/FrmProFileField.php:1645
 msgid "payload is not the right size"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1622
-#: classes/models/FrmProFileField.php:1661
+#: classes/models/FrmProFileField.php:1649
+#: classes/models/FrmProFileField.php:1688
 msgid "payload does not match the expected format"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1631
+#: classes/models/FrmProFileField.php:1658
 msgid "if sanitized data is empty, do not try to download"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1642
+#: classes/models/FrmProFileField.php:1669
 msgid "referer value either does not exist or it is unusable"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1652
+#: classes/models/FrmProFileField.php:1679
 msgid "referer check failed"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1678
+#: classes/models/FrmProFileField.php:1705
 msgid "url is not an exact match"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1686
+#: classes/models/FrmProFileField.php:1713
 msgid "no file found"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1695
+#: classes/models/FrmProFileField.php:1722
 msgid "if the filename requested does not match our filename, do not return the file"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1704
+#: classes/models/FrmProFileField.php:1731
 msgid "prevent downloads for other uploads. We only want to allow valid connected formidable data"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1711
+#: classes/models/FrmProFileField.php:1738
 msgid "user does not fit any of the set roles, do not serve a file"
 msgstr ""
 
-#: classes/models/FrmProFileField.php:1747
+#: classes/models/FrmProFileField.php:1774
 msgid "file does not exist"
 msgstr ""
 

@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p class="frm6 frm_form_field">
 		<label>
 			<?php esc_html_e( 'Post Type', 'formidable-pro' ); ?>
-			<span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php esc_attr_e( 'To setup a new custom post type, install and setup a plugin like \'Custom Post Type UI\', then return to this page to select your new custom post type.', 'formidable-pro' ) ?>"></span>
+			<span class="frm_help frm_icon_font frm_tooltip_icon" title="<?php esc_attr_e( 'To setup a new custom post type, install and setup a plugin like \'Custom Post Type UI\', then return to this page to select your new custom post type.', 'formidable-pro' ); ?>"></span>
 		</label>
-		<select class="frm_post_type" name="<?php echo esc_attr( $this->get_field_name('post_type') ) ?>">
+		<select class="frm_post_type" name="<?php echo esc_attr( $this->get_field_name('post_type') ); ?>">
 			<?php
 			foreach ( $post_types as $post_key => $post_type ) {
 				if ( in_array( $post_key, array( 'frm_display', 'frm_form_actions', 'frm_styles' ), true ) ) {
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				$expected_post_key = sanitize_title_with_dashes( $post_type->label );
 				$hide_key = ( $post_type->_builtin || $expected_post_key == $post_key || $expected_post_key == $post_key . 's' );
 				?>
-				<option value="<?php echo esc_attr( $post_key ) ?>" <?php selected( $form_action->post_content['post_type'], $post_key ) ?>>
+				<option value="<?php echo esc_attr( $post_key ); ?>" <?php selected( $form_action->post_content['post_type'], $post_key ); ?>>
 					<?php echo esc_html( $post_type->label . ( $hide_key ? '' : ' (' . $post_key . ')' ) ); ?>
 				</option>
 				<?php
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field">
 		<label><?php esc_html_e( 'Post Title', 'formidable-pro' ); ?> <span class="frm_required">*</span></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_title') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_title') ); ?>" class="frm_single_post_field">
 			<option value=""><?php esc_html_e( '&mdash; Select &mdash;' ); ?></option>
 			<?php
 			$post_key = 'post_title';
@@ -56,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</p>
 	<p class="frm6 frm_form_field frm_post_content_opt <?php echo esc_attr( $display || empty( $form_action->post_content['post_content'] ) ) ? 'frm_hidden' : ''; ?>">
 		<label><?php esc_html_e( 'Select a Field', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_content') ) ?>" class="frm_post_content_opt frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_content') ); ?>" class="frm_post_content_opt frm_single_post_field">
 			<option value=""><?php esc_html_e( '&mdash; Select &mdash;' ); ?></option>
 			<?php
 			$post_key                    = 'post_content';
@@ -71,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field frm_first">
 		<label><?php esc_html_e( 'Excerpt', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_excerpt') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_excerpt') ); ?>" class="frm_single_post_field">
 			<option value=""><?php esc_html_e( 'None', 'formidable-pro' ); ?></option>
 			<?php
 			$post_key = 'post_excerpt';
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field">
 		<label><?php esc_html_e( 'Post Password', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_password') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_password') ); ?>" class="frm_single_post_field">
 			<option value="">
 				<?php esc_html_e( 'None', 'formidable-pro' ); ?>
 			</option>
@@ -95,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field">
 		<label><?php esc_html_e( 'Slug', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_name') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_name') ); ?>" class="frm_single_post_field">
 			<option value="">
 				<?php esc_html_e( 'Automatically Generate from Post Title', 'formidable-pro' ); ?>
 			</option>
@@ -108,7 +108,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field">
 		<label><?php esc_html_e( 'Post Date', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_date') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_date') ); ?>" class="frm_single_post_field">
 			<option value="">
 				<?php esc_html_e( 'Date of entry submission', 'formidable-pro' ); ?>
 			</option>
@@ -122,11 +122,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p class="frm6 frm_form_field">
 		<label><?php esc_html_e( 'Post Status', 'formidable-pro' ); ?></label>
-		<select name="<?php echo esc_attr( $this->get_field_name('post_status') ) ?>" class="frm_single_post_field">
+		<select name="<?php echo esc_attr( $this->get_field_name('post_status') ); ?>" class="frm_single_post_field">
 			<option value="">
 				<?php esc_html_e( 'Create Draft', 'formidable-pro' ); ?>
 			</option>
-			<option value="pending" <?php selected( $form_action->post_content['post_status'], 'pending' ) ?>>
+			<option value="pending" <?php selected( $form_action->post_content['post_status'], 'pending' ); ?>>
 				<?php esc_html_e( 'Pending', 'formidable-pro' ); ?>
 			</option>
 			<option value="publish" <?php selected( $form_action->post_content['post_status'], 'publish' ); ?>>
@@ -212,7 +212,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<p>
-		<a href="javascript:void(0)" class="frm_add_posttax_row button frm-button-secondary <?php echo esc_attr( empty( $form_action->post_content['post_category'] ) ? '' : 'frm_hidden' ) ?>">
+		<a href="javascript:void(0)" class="frm_add_posttax_row button frm-button-secondary <?php echo esc_attr( empty( $form_action->post_content['post_category'] ) ? '' : 'frm_hidden' ); ?>">
 			+ <?php esc_html_e( 'Add' ); ?>
 		</a>
 	</p>
@@ -245,7 +245,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<p>
-		<a href="javascript:void(0)" class="frm_add_postmeta_row button frm-button-secondary <?php echo esc_attr( empty( $form_action->post_content['post_custom_fields'] ) ? '' : 'frm_hidden' ) ?>">
+		<a href="javascript:void(0)" class="frm_add_postmeta_row button frm-button-secondary <?php echo esc_attr( empty( $form_action->post_content['post_custom_fields'] ) ? '' : 'frm_hidden' ); ?>">
 			+ <?php esc_html_e( 'Add' ); ?>
 		</a>
 	</p>

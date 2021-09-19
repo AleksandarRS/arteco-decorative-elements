@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // If read-only, add hidden fields to hold the values
 if ( $disabled && $field['data_type'] != 'text' ) {
 	foreach ( $saved_value_array as $v ) { ?>
-<input name="<?php echo esc_attr( $field_name ) ?>" type="hidden" value="<?php echo esc_attr( $v ) ?>" <?php do_action('frm_field_input_html', $field) ?> />
+<input name="<?php echo esc_attr( $field_name ); ?>" type="hidden" value="<?php echo esc_attr( $v ); ?>" <?php do_action('frm_field_input_html', $field); ?> />
 <?php
 	}
 }
@@ -17,7 +17,7 @@ if ( 'select' == $field['data_type'] ) {
 	// If there are field options, show them in a dropdown
 	if ( ! empty( $field['options'] ) ) {
 		?>
-<select <?php echo $disabled ?> name="<?php echo esc_attr( $field_name ) ?>" id="<?php echo esc_attr( $html_id ) ?>" <?php do_action('frm_field_input_html', $field) ?>>
+<select <?php echo $disabled; ?> name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $html_id ); ?>" <?php do_action('frm_field_input_html', $field); ?>>
 <?php
 		$placeholder = FrmField::get_option( $field, 'placeholder' );
 		foreach ( $field['options'] as $opt ) {
@@ -60,7 +60,7 @@ if ( 'select' == $field['data_type'] ) {
 } else if ( 'text' == $field['data_type'] ) {
 	 // Text Lookup Field
 
-	 ?><input type="text" id="<?php echo esc_attr( $html_id ) ?>" name="<?php echo esc_attr( $field_name ) ?>" value="<?php echo esc_attr( $field['value'] ) ?>" <?php do_action('frm_field_input_html', $field) ?><?php echo $disabled ?>/><?php
+	 ?><input type="text" id="<?php echo esc_attr( $html_id ); ?>" name="<?php echo esc_attr( $field_name ); ?>" value="<?php echo esc_attr( $field['value'] ); ?>" <?php do_action('frm_field_input_html', $field); ?><?php echo $disabled; ?>/><?php
 } elseif ( $field['data_type'] === 'data' && ! empty( $field['watch_lookup'] ) && is_numeric( $field['get_values_field'] ) ) {
 	$value = implode( ', ', $saved_value_array );
 	?>

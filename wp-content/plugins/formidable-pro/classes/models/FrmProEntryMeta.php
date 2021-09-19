@@ -617,21 +617,11 @@ class FrmProEntryMeta {
 	}
 
 	public static function skip_required_validation( $field ) {
-		$going_backwards = FrmProFormsHelper::going_to_prev( $field->form_id );
-		if ( $going_backwards ) {
-			return true;
-		}
-
-		$saving_draft = FrmProFormsHelper::saving_draft();
-		if ( $saving_draft ) {
-			return true;
-		}
-
-		if ( self::is_field_conditionally_hidden( $field ) ) {
-			return true;
-		}
-
-		return false;
+		return FrmProFormsHelper::going_to_prev( $field->form_id )
+			|| FrmProFormsHelper::saving_draft()
+			|| self::is_field_conditionally_hidden( $field )
+			|| self::has_invisible_errors( $field )
+			|| self::field_is_hidden_by_form_state( $field );
 	}
 
 	/**

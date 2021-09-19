@@ -92,7 +92,7 @@ class FrmProFormActionsController {
 				continue;
 			}
 
-			if ( $stop && 'any' == $notification['conditions']['any_all'] && 'stop' == $notification['conditions']['send_stop'] ) {
+			if ( $stop && 'any' === $notification['conditions']['any_all'] && 'stop' === $notification['conditions']['send_stop'] ) {
 				continue;
 			}
 
@@ -102,16 +102,16 @@ class FrmProFormActionsController {
 
 			$stop = FrmFieldsHelper::value_meets_condition( $observed_value, $condition['hide_field_cond'], $condition['hide_opt'] );
 
-			if ( $notification['conditions']['send_stop'] == 'send' ) {
+			if ( $notification['conditions']['send_stop'] === 'send' ) {
 				$stop = $stop ? false : true;
 			}
 
 			$met[ $stop ] = $stop;
 		}
 
-		if ( $notification['conditions']['any_all'] == 'all' && ! empty( $met ) && isset( $met[0] ) && isset( $met[1] ) ) {
-			$stop = ( $notification['conditions']['send_stop'] == 'send' );
-		} elseif ( $notification['conditions']['any_all'] == 'any' && $notification['conditions']['send_stop'] == 'send' && isset( $met[0] ) ) {
+		if ( $notification['conditions']['any_all'] === 'all' && ! empty( $met ) && isset( $met[0] ) && isset( $met[1] ) ) {
+			$stop = ( $notification['conditions']['send_stop'] === 'send' );
+		} elseif ( $notification['conditions']['any_all'] === 'any' && $notification['conditions']['send_stop'] === 'send' && isset( $met[0] ) ) {
 			$stop = false;
 		}
 
@@ -158,16 +158,21 @@ class FrmProFormActionsController {
 
 		if ( isset( $entry->metas[ $field_id ] ) ) {
 			$observed_value = $entry->metas[ $field_id ];
-		} elseif ( $entry->post_id && FrmAppHelper::pro_is_installed() ) {
-			$field          = FrmField::getOne( $field_id );
-			$observed_value = FrmProEntryMetaHelper::get_post_or_meta_value(
-				$entry,
-				$field,
-				array(
-					'links'    => false,
-					'truncate' => false,
-				)
-			);
+		} elseif ( FrmAppHelper::pro_is_installed() ) {
+			$field = FrmField::getOne( $field_id );
+
+			if ( $entry->post_id ) {
+				$observed_value = FrmProEntryMetaHelper::get_post_or_meta_value(
+					$entry,
+					$field,
+					array(
+						'links'    => false,
+						'truncate' => false,
+					)
+				);
+			} else {
+				$observed_value = self::maybe_get_repeater_values_from_entry( $field, $entry );
+			}
 		}
 
 		/**
@@ -176,6 +181,27 @@ class FrmProFormActionsController {
 		$observed_value = apply_filters( 'frm_action_logic_value', $observed_value, compact( 'entry', 'field_id' ) );
 
 		return $observed_value;
+	}
+
+	/**
+	 * @param stdClass $field
+	 * @param stdClass $entry
+	 * @return array|string
+	 */
+	private static function maybe_get_repeater_values_from_entry( $field, $entry ) {
+		if ( ! $field || empty( $field->field_options['in_section'] ) || ! isset( $entry->metas[ $field->field_options['in_section'] ] ) || (int) $entry->form_id === (int) $field->form_id ) {
+			return '';
+		}
+
+		global $wpdb;
+		return FrmDb::get_col(
+			$wpdb->prefix . 'frm_item_metas m INNER JOIN ' . $wpdb->prefix . 'frm_items i ON i.id = m.item_id',
+			array(
+				'm.field_id'       => $field->id,
+				'i.parent_item_id' => $entry->id,
+			),
+			'm.meta_value'
+		);
 	}
 
 	public static function _logic_row() {

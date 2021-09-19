@@ -3544,13 +3544,7 @@ function frmProFormJS() {
 	}
 
 	function fieldCanDoCalc( fieldType ) {
-		var canDoCalc = false;
-
-		if ( fieldType === 'text' || fieldType === 'hidden' || fieldType === 'number' ) {
-			canDoCalc = true;
-		}
-
-		return canDoCalc;
+		return -1 !== [ 'text', 'hidden', 'number', 'textarea' ].indexOf( fieldType );
 	}
 
 	function getFieldKey( fieldHtmlId, fieldName ) {
@@ -3822,7 +3816,15 @@ function frmProFormJS() {
 	}
 
 	function getNonSiblingField( field ) {
-		return jQuery( field.thisFieldCall );
+		var nonSiblingField = jQuery( field.thisFieldCall );
+		if ( ! nonSiblingField.length && 'input[' === field.thisFieldCall.substr( 0, 6 ) ) {
+			if ( 'undefined' !== typeof field.triggerField && field.triggerField.is( 'div' ) && field.triggerField.hasClass( 'frm_form_field' ) ) {
+				nonSiblingField = field.triggerField.find( field.thisFieldCall.replace( 'input[', 'textarea[' ) );
+			} else {
+				nonSiblingField = jQuery( field.thisFieldCall.replace( 'input[', 'textarea[' ) );
+			}
+		}
+		return nonSiblingField;
 	}
 
 	function getOptionValue( thisField, currentOpt ) {
@@ -4328,6 +4330,7 @@ function frmProFormJS() {
 								checkFieldsWithConditionalLogicDependentOnThis( fieldID, fieldObject );
 								checkFieldsWatchingLookup( fieldID, fieldObject, 'value changed' );
 								doCalculation( fieldID, fieldObject );
+								maybeDoCalcForSingleField( fieldObject.get( 0 ) );
 								reset = 'persist';
 							}
 					} );

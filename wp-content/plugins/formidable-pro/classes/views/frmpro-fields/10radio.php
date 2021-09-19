@@ -21,12 +21,12 @@ if ( is_array($field['options']) ) {
         $opt = apply_filters('frm_field_label_seen', $opt, $opt_key, $field);
         $last = end($field['options']) == $opt ? ' frm_last' : '';
 
-    ?><div class="frm_scale <?php echo esc_attr( $last ) ?>"><label for="<?php echo esc_attr( $html_id . '-' . $opt_key ) ?>">
-<input type="radio" name="<?php echo esc_attr( $field_name ) ?>" id="<?php echo esc_attr( $html_id . '-' . $opt_key ) ?>" value="<?php echo esc_attr( $opt ) ?>" <?php
+    ?><div class="frm_scale <?php echo esc_attr( $last ); ?>"><label for="<?php echo esc_attr( $html_id . '-' . $opt_key ); ?>">
+<input type="radio" name="<?php echo esc_attr( $field_name ); ?>" id="<?php echo esc_attr( $html_id . '-' . $opt_key ); ?>" value="<?php echo esc_attr( $opt ); ?>" <?php
 	checked( $field['value'], $opt ) . ' ';
     do_action( 'frm_field_input_html', $field );
 ?> />
-<?php echo esc_html( $opt ) ?></label>
+<?php echo esc_html( $opt ); ?></label>
 </div>
 <?php
 

@@ -4,14 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <p class="howto">
-	<?php esc_html_e( 'Determine who can see, submit, and edit form entries.', 'formidable-pro' ) ?>
+	<?php esc_html_e( 'Determine who can see, submit, and edit form entries.', 'formidable-pro' ); ?>
 </p>
 
 <div class="frm_grid_container">
 	<p class="frm4 frm_form_field">
         <label id="for_logged_in_role" for="logged_in">
 			<input type="checkbox" name="logged_in" id="logged_in" value="1" <?php checked( $values['logged_in'], 1 ); ?> />
-			<?php printf( __( 'Limit form visibility %1$sto%2$s', 'formidable-pro' ), '<span class="hide_logged_in ' . esc_attr( $values['logged_in'] ? '' : 'frm_invisible' ) . '">', '</span>' ) ?>
+			<?php printf( __( 'Limit form visibility %1$sto%2$s', 'formidable-pro' ), '<span class="hide_logged_in ' . esc_attr( $values['logged_in'] ? '' : 'frm_invisible' ) . '">', '</span>' ); ?>
         </label>
 	</p>
     <p class="frm8 frm_form_field frm_select_with_label">
@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <p class="frm4 frm_form_field">
 		<label for="single_entry">
 			<input type="checkbox" name="options[single_entry]" id="single_entry" value="1" <?php checked( $values['single_entry'], 1 ); ?> />
-			<?php printf( __( 'Limit number of entries %1$sto one per%2$s', 'formidable-pro' ), '<span class="hide_single_entry' . esc_attr( $values['single_entry'] ? '' : ' frm_invisible' ) . '">', '</span>' ) ?>
+			<?php printf( __( 'Limit number of entries %1$sto one per%2$s', 'formidable-pro' ), '<span class="hide_single_entry' . esc_attr( $values['single_entry'] ? '' : ' frm_invisible' ) . '">', '</span>' ); ?>
 		</label>
     </p>
     <p class="frm8 frm_form_field frm_select_with_label">
@@ -45,13 +45,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<p id="frm_cookie_expiration" class="frm_indent_opt <?php echo ( $values['single_entry'] && $values['single_entry_type'] == 'cookie' ) ? '' : 'frm_hidden'; ?>">
 		<label><?php esc_html_e( 'Cookie Expiration', 'formidable-pro' ); ?></label>
-		<input type="text" name="options[cookie_expiration]" value="<?php echo esc_attr($values['cookie_expiration']) ?>"/>
+		<input type="text" name="options[cookie_expiration]" value="<?php echo esc_attr($values['cookie_expiration']); ?>"/>
 		<span class="howto"><?php esc_html_e( 'hours', 'formidable-pro' ); ?></span>
 	</p>
 
     <p>
 		<label for="editable">
-			<input type="checkbox" name="editable" id="editable" value="1" <?php checked( $values['editable'], 1 ) ?> />
+			<input type="checkbox" name="editable" id="editable" value="1" <?php checked( $values['editable'], 1 ); ?> />
 			<?php esc_html_e( 'Allow front-end editing of entries', 'formidable-pro' ); ?>
 		</label>
     </p>
@@ -135,7 +135,7 @@ if ( isset( $values['open_editable'] ) && empty( $values['open_editable'] ) ) {
 
     <p>
 		<label for="save_draft">
-			<input type="checkbox" name="options[save_draft]" id="save_draft" value="1" <?php checked( $values['save_draft'], 1 ) ?> />
+			<input type="checkbox" name="options[save_draft]" id="save_draft" value="1" <?php checked( $values['save_draft'], 1 ); ?> />
 			<?php esc_html_e( 'Allow logged-in users to save drafts', 'formidable-pro' ); ?>
 		</label>
     </p>
@@ -143,7 +143,7 @@ if ( isset( $values['open_editable'] ) && empty( $values['open_editable'] ) ) {
 <?php if ( $has_file_field ) { ?>
 	<p>
 		<label for="protect_files">
-			<input type="checkbox" name="options[protect_files]" id="protect_files" value="1" <?php checked( $values['protect_files'], 1 ) ?> />
+			<input type="checkbox" name="options[protect_files]" id="protect_files" value="1" <?php checked( $values['protect_files'], 1 ); ?> />
 
 			<?php esc_html_e( 'Protect all files uploaded in this form', 'formidable-pro' ); ?>
 

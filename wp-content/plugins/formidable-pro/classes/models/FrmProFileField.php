@@ -706,30 +706,30 @@ class FrmProFileField {
 	/**
 	 * Let WordPress process the uploads
 	 *
-	 * @param int $field_id
-	 * @param bool $sideload
+	 * @param string|array $file_id Index (or array of Indices) of the $_FILES array that the file was sent.
+	 * @param bool         $sideload If True upload is handled with media_handle_sideload instead of media_handle_upload.
 	 */
-	public static function upload_file( $field_id, $sideload = false ) {
-		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-		require_once( ABSPATH . 'wp-admin/includes/image.php' );
-		require_once( ABSPATH . 'wp-admin/includes/media.php' );
+	public static function upload_file( $file_id, $sideload = false ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		require_once ABSPATH . 'wp-admin/includes/image.php';
+		require_once ABSPATH . 'wp-admin/includes/media.php';
 
 		$response = array( 'media_ids' => array(), 'errors' => array() );
 		add_filter( 'upload_dir', array( 'FrmProFileField', 'upload_dir' ) );
 
-		if ( ! $sideload && is_array( $_FILES[ $field_id ]['name'] ) ) {
-			foreach ( $_FILES[ $field_id ]['name'] as $k => $n ) {
+		if ( ! $sideload && is_array( $_FILES[ $file_id ]['name'] ) ) {
+			foreach ( $_FILES[ $file_id ]['name'] as $k => $n ) {
 				if ( empty( $n ) ) {
 					continue;
 				}
 
-				$f_id = $field_id . $k;
+				$f_id            = $file_id . $k;
 				$_FILES[ $f_id ] = array(
-					'name'  => $n,
-					'type'  => $_FILES[ $field_id ]['type'][ $k ],
-					'tmp_name' => $_FILES[ $field_id ]['tmp_name'][ $k ],
-					'error' => $_FILES[ $field_id ]['error'][ $k ],
-					'size'  => $_FILES[ $field_id ]['size'][ $k ],
+					'name'     => self::maybe_truncate_long_file_name( $n ),
+					'type'     => $_FILES[ $file_id ]['type'][ $k ],
+					'tmp_name' => $_FILES[ $file_id ]['tmp_name'][ $k ],
+					'error'    => $_FILES[ $file_id ]['error'][ $k ],
+					'size'     => $_FILES[ $file_id ]['size'][ $k ],
 				);
 
 				unset( $k, $n );
@@ -737,7 +737,10 @@ class FrmProFileField {
 				self::handle_upload( $f_id, $response );
 			}
 		} else {
-			self::handle_upload( $field_id, $response, $sideload );
+			if ( is_string( $file_id ) && isset( $_FILES[ $file_id ] ) && isset( $_FILES[ $file_id ]['name'] ) && is_string( $_FILES[ $file_id ]['name'] ) ) {
+				$_FILES[ $file_id ]['name'] = self::maybe_truncate_long_file_name( $_FILES[ $file_id ]['name'] );
+			}
+			self::handle_upload( $file_id, $response, $sideload );
 		}
 
 		remove_filter( 'upload_dir', array( 'FrmProFileField', 'upload_dir' ) );
@@ -747,9 +750,33 @@ class FrmProFileField {
 		return $response;
 	}
 
-	private static function handle_upload( $field_id, &$response, $sideload = false ) {
+	/**
+	 * @since 5.0.03
+	 * @param string $name
+	 * @return string
+	 */
+	private static function maybe_truncate_long_file_name( $name ) {
+		$max_filename_length = apply_filters( 'frm_max_filename_length', 100, compact( 'name' ) );
+
+		if ( strlen( $name ) < $max_filename_length ) {
+			return $name;
+		}
+
+		$split     = explode( '.', $name );
+		$extension = array_pop( $split );
+		$name      = implode( '.', $split );
+		$name      = substr( $name, 0, $max_filename_length - strlen( $extension ) - 1 );
+		return $name . '.' . $extension;
+	}
+
+	/**
+	 * @param string|array $file_id Index (or array of Indices) of the $_FILES array that the file was sent.
+	 * @param array        $response
+	 * @param bool         $sideload If True upload is handled with media_handle_sideload instead of media_handle_upload.
+	 */
+	private static function handle_upload( $file_id, &$response, $sideload = false ) {
 		add_filter( 'wp_insert_attachment_data', 'FrmProFileField::change_attachment_slug', 10, 2 );
-		$media_id = $sideload ? media_handle_sideload( $field_id, 0 ) : media_handle_upload( $field_id, 0 );
+		$media_id = $sideload ? media_handle_sideload( $file_id, 0 ) : media_handle_upload( $file_id, 0 );
 		remove_filter( 'wp_insert_attachment_data', 'FrmProFileField::change_attachment_slug' );
 
 		if ( is_numeric( $media_id ) ) {

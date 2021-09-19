@@ -3116,20 +3116,7 @@ class FrmProEntriesController {
 				$frm_vars['ajax'] = true;
 				$frm_vars['css_loaded'] = true;
 
-				$include_fields = FrmProFormState::get_from_request( 'include_fields', array() );
-				if ( $include_fields ) {
-					$frm_vars['show_fields'] = $include_fields;
-				}
-
-				$exclude_fields = FrmProFormState::get_from_request( 'exclude_fields', array() );
-				if ( $exclude_fields ) {
-					FrmProFormsController::set_included_fields(
-						array(
-							'id'             => $form->id,
-							'exclude_fields' => $exclude_fields,
-						)
-					);
-				}
+				self::maybe_include_exclude_fields( $form->id );
 
 				// don't load scripts if we are going backwards in the form
 				$going_backwards = FrmProFormsHelper::going_to_prev( $form->id );
@@ -3143,7 +3130,15 @@ class FrmProEntriesController {
 					$response['page'] = FrmProFormsHelper::get_the_page_number( $form->id );
 				}
 
-				$response['content'] .= FrmFormsController::show_form( $form->id );
+				$get = FrmProFormState::get_from_request( 'get', array() );
+				if ( $get ) {
+					FrmProAppController::set_get( $get );
+				}
+
+				self::maybe_include_exclude_fields( $form->id );
+				$title                = FrmProFormState::get_from_request( 'title', false );
+				$description          = FrmProFormState::get_from_request( 'description', false );
+				$response['content'] .= FrmFormsController::show_form( $form->id, '', $title, $description );
 
 				// trigger the footer scripts if there is a form to show
 				if ( $errors || ! isset( $processed ) || ! empty( $frm_vars['forms_loaded'] ) ) {
@@ -3184,6 +3179,26 @@ class FrmProEntriesController {
 
 		echo json_encode( $response );
 		wp_die();
+	}
+
+	/**
+	 * @param int $form_id
+	 */
+	private static function maybe_include_exclude_fields( $form_id ) {
+		$include_fields = FrmProFormState::get_from_request( 'include_fields', array() );
+		if ( $include_fields ) {
+			$frm_vars['show_fields'] = $include_fields;
+		}
+
+		$exclude_fields = FrmProFormState::get_from_request( 'exclude_fields', array() );
+		if ( $exclude_fields ) {
+			FrmProFormsController::set_included_fields(
+				array(
+					'id'             => $form_id,
+					'exclude_fields' => $exclude_fields,
+				)
+			);
+		}
 	}
 
 	public static function setup_edit_vars( $values ) {

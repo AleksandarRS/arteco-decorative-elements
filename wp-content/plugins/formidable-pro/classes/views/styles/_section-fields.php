@@ -5,56 +5,56 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 		<p class="frm4 frm_first frm_form_field">
         	<label><?php esc_html_e( 'Color', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_color') ) ?>" id="frm_section_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_color'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_color') ); ?>" id="frm_section_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_color'] ); ?>" />
 		</p>
 
 		<p class="frm4 frm_form_field">
         	<label><?php esc_html_e( 'Weight', 'formidable-pro' ); ?></label>
-        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_weight') ) ?>" id="frm_section_weight">
+        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_weight') ); ?>" id="frm_section_weight">
 				<?php foreach ( FrmStyle::get_bold_options() as $value => $name ) { ?>
-				<option value="<?php echo esc_attr( $value ) ?>" <?php selected( $style->post_content['section_weight'], $value ) ?>><?php echo esc_html( $name ) ?></option>
+				<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $style->post_content['section_weight'], $value ); ?>><?php echo esc_html( $name ); ?></option>
 				<?php } ?>
         	</select>
 		</p>
 
 		<p class="frm4 frm_form_field">
         	<label><?php esc_html_e( 'Size', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_font_size') ) ?>" id="frm_section_font_size" value="<?php echo esc_attr( $style->post_content['section_font_size'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_font_size') ); ?>" id="frm_section_font_size" value="<?php echo esc_attr( $style->post_content['section_font_size'] ); ?>" />
 		</p>
 
 		<p class="frm6 frm_first frm_form_field">
 			<label class="background"><?php esc_html_e( 'BG color', 'formidable-pro' ); ?></label>
-    	    <input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_bg_color') ) ?>" id="frm_section_bg_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_bg_color'] ) ?>" />
+    	    <input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_bg_color') ); ?>" id="frm_section_bg_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_bg_color'] ); ?>" />
 		</p>
 
 		<p class="frm6 frm_form_field">
 			<label><?php esc_html_e( 'Padding', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_pad') ) ?>" id="frm_section_pad" value="<?php echo esc_attr( $style->post_content['section_pad'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_pad') ); ?>" id="frm_section_pad" value="<?php echo esc_attr( $style->post_content['section_pad'] ); ?>" />
 		</p>
 
 		<p class="frm6 frm_first frm_form_field">
         	<label><?php esc_html_e( 'Top Margin', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_mar_top') ) ?>" id="frm_section_mar_top" value="<?php echo esc_attr( $style->post_content['section_mar_top'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_mar_top') ); ?>" id="frm_section_mar_top" value="<?php echo esc_attr( $style->post_content['section_mar_top'] ); ?>" />
 		</p>
 
 		<p class="frm6 frm_form_field">
         	<label><?php esc_html_e( 'Bottom Margin', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_mar_bottom') ) ?>" id="frm_section_mar_bottom" value="<?php echo esc_attr( $style->post_content['section_mar_bottom'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_mar_bottom') ); ?>" id="frm_section_mar_bottom" value="<?php echo esc_attr( $style->post_content['section_mar_bottom'] ); ?>" />
 		</p>
 
 		<p class="frm4 frm_first frm_form_field">
 			<label><?php esc_html_e( 'Border', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_border_color') ) ?>" id="frm_section_border_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_border_color'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_border_color') ); ?>" id="frm_section_border_color" class="hex" value="<?php echo esc_attr( $style->post_content['section_border_color'] ); ?>" />
 		</p>
 
 		<p class="frm4 frm_form_field">
         	<label><?php esc_html_e( 'Thickness', 'formidable-pro' ); ?></label>
-        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_border_width') ) ?>" id="frm_section_border_width" value="<?php echo esc_attr( $style->post_content['section_border_width'] ) ?>" />
+        	<input type="text" name="<?php echo esc_attr( $frm_style->get_field_name('section_border_width') ); ?>" id="frm_section_border_width" value="<?php echo esc_attr( $style->post_content['section_border_width'] ); ?>" />
 		</p>
 
 		<p class="frm4 frm_form_field">
         	<label><?php esc_html_e( 'Style', 'formidable-pro' ); ?></label>
-        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_border_style') ) ?>" id="frm_section_border_style">
+        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_border_style') ); ?>" id="frm_section_border_style">
 				<option value="solid" <?php selected( $style->post_content['section_border_style'], 'solid' ); ?>>
 					<?php esc_html_e( 'solid', 'formidable-pro' ); ?>
 				</option>
@@ -72,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<p class="frm4 frm_first frm_form_field">
 			<label><?php esc_html_e( 'Border Position', 'formidable-pro' ); ?></label>
-        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_border_loc') ) ?>" id="frm_section_border_loc">
+        	<select name="<?php echo esc_attr( $frm_style->get_field_name('section_border_loc') ); ?>" id="frm_section_border_loc">
 				<option value="-top" <?php selected( $style->post_content['section_border_loc'], '-top' ); ?>>
 					<?php esc_html_e( 'top', 'formidable-pro' ); ?>
 				</option>
@@ -101,7 +101,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<p class="frm6 frm_form_field">
 			<label><?php esc_html_e( 'Icon Position', 'formidable-pro' ); ?></label>
-        	<select name="<?php echo esc_attr( $frm_style->get_field_name('collapse_pos') ) ?>" id="frm_collapse_pos">
+        	<select name="<?php echo esc_attr( $frm_style->get_field_name('collapse_pos') ); ?>" id="frm_collapse_pos">
 				<option value="after" <?php selected( $style->post_content['collapse_pos'], 'after' ); ?>>
 					<?php esc_html_e( 'After Heading', 'formidable-pro' ); ?>
 				</option>

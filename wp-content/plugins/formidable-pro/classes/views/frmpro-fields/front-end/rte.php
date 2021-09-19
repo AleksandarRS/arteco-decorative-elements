@@ -30,7 +30,7 @@ if ( FrmAppHelper::is_admin() ) { ?>
 
 	if ( $field['size'] ) {
 	?>
-		<style type="text/css">#wp-field_<?php echo esc_attr( $field['field_key'] ) ?>-wrap{width:<?php echo esc_attr( $field['size'] ) . ( is_numeric( $field['size'] ) ? 'px' : '' ); ?>;}</style><?php
+		<style type="text/css">#wp-field_<?php echo esc_attr( $field['field_key'] ); ?>-wrap{width:<?php echo esc_attr( $field['size'] ) . ( is_numeric( $field['size'] ) ? 'px' : '' ); ?>;}</style><?php
 	}
 
 	wp_editor( FrmAppHelper::esc_textarea( $field['value'], true ), $html_id, $e_args );

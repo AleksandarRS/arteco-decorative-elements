@@ -17,11 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <form method="post">
         <input type="hidden" name="frm_action" value="import_csv" />
-		<input type="hidden" name="frm_import_file" value="<?php echo esc_attr( $media_id ) ?>" />
-		<input type="hidden" name="row" value="<?php echo esc_attr( $row ) ?>" />
-		<input type="hidden" name="form_id" value="<?php echo esc_attr( $form_id ) ?>" />
-        <input type="hidden" name="csv_del" value="<?php echo esc_attr($csv_del) ?>" />
-        <input type="hidden" name="csv_files" value="<?php echo esc_attr($csv_files) ?>" />
+		<input type="hidden" name="frm_import_file" value="<?php echo esc_attr( $media_id ); ?>" />
+		<input type="hidden" name="row" value="<?php echo esc_attr( $row ); ?>" />
+		<input type="hidden" name="form_id" value="<?php echo esc_attr( $form_id ); ?>" />
+        <input type="hidden" name="csv_del" value="<?php echo esc_attr($csv_del); ?>" />
+        <input type="hidden" name="csv_files" value="<?php echo esc_attr($csv_files); ?>" />
         <table class="form-table">
             <thead>
             <tr class="form-field">
@@ -38,12 +38,12 @@ if ( ! defined( 'ABSPATH' ) ) {
                 $lower_header             = strtolower( $converted_header );
             ?>
             <tr class="form-field">
-                <td><?php echo $converted_header ?></td>
+                <td><?php echo $converted_header; ?></td>
                 <td><?php if ( isset( $example[ $i ] ) ) { ?>
-                    <span class="howto"><?php echo htmlspecialchars( $example[ $i ] ) ?></span>
+                    <span class="howto"><?php echo htmlspecialchars( $example[ $i ] ); ?></span>
                 <?php } ?></td>
                 <td>
-                    <select name="data_array[<?php echo esc_attr( $i ) ?>]" id="mapping_<?php echo esc_attr( $i ) ?>">
+                    <select name="data_array[<?php echo esc_attr( $i ); ?>]" id="mapping_<?php echo esc_attr( $i ); ?>">
                         <option value=""> </option>
 						<?php
 						foreach ( $fields as $field ) {
@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								foreach ( $headings as $heading_key => $heading_label ) {
 									?>
 									<option
-										value="<?php echo esc_attr( $heading_key ) ?>"
+										value="<?php echo esc_attr( $heading_key ); ?>"
 										<?php selected( $heading_label, $header ); ?>
 									><?php echo FrmAppHelper::truncate( $heading_label, 50 ); ?></option>
 									<?php
@@ -87,7 +87,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 $already_selected_a_value = true;
                             }
                         ?>
-                            <option value="<?php echo esc_attr( $field->id ) ?>" <?php selected($selected, true) ?>><?php echo FrmAppHelper::truncate($field->name, 50) ?></option>
+                            <option value="<?php echo esc_attr( $field->id ); ?>" <?php selected($selected, true); ?>><?php echo FrmAppHelper::truncate($field->name, 50); ?></option>
                         <?php
                             unset($field);
                         }
@@ -125,9 +125,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             ?>
         </table>
         <p class="submit">
-            <input type="submit" value="<?php esc_attr_e( 'Import', 'formidable-pro' ) ?>" class="button-primary" />
+            <input type="submit" value="<?php esc_attr_e( 'Import', 'formidable-pro' ); ?>" class="button-primary" />
         </p>
-        <p class="howto"><?php esc_html_e( 'Note: If you select a field for the Entry ID or Entry Key, the matching entry with that ID or key will be updated.', 'formidable-pro' ) ?></p>
+        <p class="howto"><?php esc_html_e( 'Note: If you select a field for the Entry ID or Entry Key, the matching entry with that ID or key will be updated.', 'formidable-pro' ); ?></p>
     </form>
 
     </div>

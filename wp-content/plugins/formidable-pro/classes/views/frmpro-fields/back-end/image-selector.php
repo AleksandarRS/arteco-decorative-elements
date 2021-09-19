@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 	<button type="button" class="frm_choose_image_box frm_button frm_no_style_button<?php echo ( empty( $image['url'] ) ? '' : ' frm_hidden' ); ?>">
-		<?php FrmAppHelper::icon_by_class( 'frm_icon_font frm_upload_icon' ) ?>
+		<?php FrmAppHelper::icon_by_class( 'frm_icon_font frm_upload_icon' ); ?>
 		<?php esc_attr_e( 'Upload image', 'formidable-pro' ); ?>
 	</button>
 </div>

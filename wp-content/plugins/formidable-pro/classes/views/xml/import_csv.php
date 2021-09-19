@@ -21,15 +21,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
         <div class="frm_admin_progress">
-          <div class="frm_admin_progress_bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="<?php echo esc_attr( $left ) ?>" style="width:0%;">
-          </div>
+            <div class="frm_admin_progress_bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="<?php echo esc_attr( $left ); ?>" style="width:0%;">
+            </div>
         </div>
 
 
 <script type="text/javascript">
 /*<![CDATA[*/
-__FRMURLVARS="<?php echo $url_vars ?>";
-jQuery(document).ready(function(){frmImportCsv(<?php echo (int) $form_id ?>);});
+__FRMURLVARS="<?php echo $url_vars; ?>";
+jQuery(document).ready(function(){frmImportCsv(<?php echo (int) $form_id; ?>);});
 /*]]>*/
 </script>
     </div>

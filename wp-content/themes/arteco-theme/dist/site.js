@@ -168,6 +168,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 		var Navigation = require('./core/navigation');
 		var slick = require('./site/slick');
+		var toggle = require('./site/toggle');
 		var example = require('./site/example');
 
 		jQuery(function () {
@@ -183,11 +184,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			slick.init();
 
 			/**
+    * Initialize toggle module
+    */
+			toggle.init();
+
+			/**
     * Initialize sample module
     */
 			example.init();
 		});
-	}, { "./core/navigation": 1, "./site/example": 3, "./site/slick": 5, "jquery": 6 }], 3: [function (require, module, exports) {
+	}, { "./core/navigation": 1, "./site/example": 3, "./site/slick": 5, "./site/toggle": 6, "jquery": 7 }], 3: [function (require, module, exports) {
 		"use strict";
 
 		// const Global = require('./global');
@@ -406,14 +412,42 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				this.$dom.slickSliderPartners.slick({
 					slidesToScroll: 1,
 					slidesToShow: 3,
-					dots: true,
-					arrows: true,
-					prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
-					nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>"
+					dots: false,
+					arrows: false
 				});
 			}
 		};
-	}, { "slick-carousel": 7 }], 6: [function (require, module, exports) {
+	}, { "slick-carousel": 8 }], 6: [function (require, module, exports) {
+		"use strict";
+
+		// const Global = require('./global');
+
+		// let	_this;
+
+		var _this = module.exports = {
+
+			/*-------------------------------------------------------------------------------
+   	# Cache dom and strings
+   -------------------------------------------------------------------------------*/
+			$dom: {
+				toggleIcon: $('.hero-icon')
+			},
+
+			vars: {},
+
+			/*-------------------------------------------------------------------------------
+   	# Initialize
+   -------------------------------------------------------------------------------*/
+			init: function init() {
+				if (_this) {
+					this.$dom.toggleIcon.click(function () {
+						$(this).toggleClass("highlight");
+					});
+				}
+			}
+
+		};
+	}, {}], 7: [function (require, module, exports) {
 		/*!
    * jQuery JavaScript Library v3.4.1
    * https://jquery.com/
@@ -10548,7 +10582,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 			return jQuery;
 		});
-	}, {}], 7: [function (require, module, exports) {
+	}, {}], 8: [function (require, module, exports) {
 		/*
        _ _      _       _
    ___| (_) ___| | __  (_)___
@@ -13302,4 +13336,4 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				return _;
 			};
 		});
-	}, { "jquery": 6 }] }, {}, [2]);
+	}, { "jquery": 7 }] }, {}, [2]);

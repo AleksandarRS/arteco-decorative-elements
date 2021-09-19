@@ -318,7 +318,7 @@ class FrmProFieldFile extends FrmFieldType {
 			if ( $atts['add_link'] || ( ! $is_image && $atts['add_link_for_non_image'] ) ) {
 				$href   = $is_image ? FrmProFileField::get_file_url( $id ) : $url;
 				$target = ! empty( $atts['new_tab'] ) ? ' target="_blank"' : '';
-				$html   = '<a href="' . esc_url( $href ) . '" class="frm_file_link"' . $target . '>' . $html . '</a>';
+				$html   = '<a href="' . esc_attr( $href ) . '" class="frm_file_link"' . $target . '>' . $html . '</a>';
 			}
 
 			if ( ! empty( $atts['class'] ) ) {
@@ -351,13 +351,11 @@ class FrmProFieldFile extends FrmFieldType {
 	 * @return boolean|string $filename
 	 */
 	private function get_single_file_name( $id ) {
-		$attachment = get_post( $id );
-		if ( ! $attachment ) {
-			$filename = false;
-		} else {
-			$filename = basename( $attachment->guid );
+		$filepath = get_attached_file( $id, true );
+		if ( ! is_string( $filepath ) ) {
+			return false;
 		}
-		return $filename;
+		return basename( $filepath );
 	}
 
 	public function front_field_input( $args, $shortcode_atts ) {

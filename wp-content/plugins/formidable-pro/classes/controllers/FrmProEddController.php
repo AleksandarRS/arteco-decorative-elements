@@ -173,7 +173,7 @@ class FrmProEddController extends FrmAddon {
 	</p>
 
 	<div class="frm-show-authorized">
-		<p>You're using Formidable Forms Premium. Enjoy! 🙂</p>
+		<p>You're using Formidable Forms <?php echo esc_html( FrmProAddonsController::get_readable_license_type() ); ?>. Enjoy! 🙂</p>
 		<?php if ( ! empty( $type ) && $type !== 'elite' ) { ?>
 		<p style="font-size:1.1em">
 			To <b>unlock more features</b> consider <a href="<?php echo esc_url( FrmAppHelper::make_affiliate_url( FrmAppHelper::admin_upgrade_link( 'settings-upgrade', 'account/downloads/' ) ) ); ?>">upgrading to the Elite plan</a>.
