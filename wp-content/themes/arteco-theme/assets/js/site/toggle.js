@@ -23,7 +23,8 @@ let _this = module.exports = {
 	init: function () {
 		if( _this ){
 			this.$dom.toggleIcon.click(function() {
-				$( this ).toggleClass( "highlight" );
+				// $( this ).parent('.hero-decription-icon-animate-wrap').toggleClass( "toggled-content" );
+				$( this ).parent('.hero-decription-icon-animate-wrap').find('.hero-text-description').slideToggle( "slow" );;
 			});
 		}
     },

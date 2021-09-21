@@ -8,7 +8,7 @@ $hero_description_t = get_sub_field('hero_description_t');
 $hero_description_l = get_sub_field('hero_description_l');
 ?>
 <section class="hero-section">
-    <div class="hero-section-media-wrap">
+    <div class="hero-section-media-wrap left-calc">
         <div class="hero-section-image-wrap" style="background-image: url(<?php echo esc_url($hero_image['url']); ?>);" role="img" aria-label="<?php echo esc_attr($hero_image['alt']); ?>">
             <!-- <img src="<?php // echo esc_url($hero_image['url']); ?>" alt="<?php // echo esc_attr($hero_image['alt']); ?>" /> -->
             <div class="image-description-items-wrapper">
@@ -67,19 +67,19 @@ $hero_description_l = get_sub_field('hero_description_l');
                 <div class="col-md-7">
                     <div class="hero-main-title-wrapper">
                         <header class="title-header">
-                            <?php if($main_title): ?>
-                                <p class="title-label"><?php _e('Arteco dekorativni elementi','ade'); ?></p>
-                                <h1><?php echo $main_title; ?></h1>
+                            <?php if($main_hero_title): ?>
+                                <h1 class="title-label"><?php _e('Arteco dekorativni elementi','ade'); ?></h1>
+                                <h2 class="the-title"><?php echo $main_hero_title; ?></h2>
                             <?php else: ?>        
-                                <p class="title-label"><?php _e('Arteco dekorativni elementi','ade'); ?></p>
-                                <h1><?php _e('Domaći proizvod izradjen po starinskim receptima','ade'); ?></h1>
+                                <h1 class="title-label"><?php _e('Arteco dekorativni elementi','ade'); ?></h1>
+                                <h2 class="the-title"><?php _e('Domaći proizvod izrađen po starinskim receptima','ade'); ?></h2>
                             <?php endif ?>        
                         </header>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-5 hero-partners-wrapper">
                     <div class="hero-partners-wrap hero-label-link-wrapper">
-                        <div class="hero-partners-label hero-label-wrap">
+                        <div class="hero-partners-label hero-label-wrap title-header">
                             <?php if($main_title): ?>
                                 <p class="title-label"><?php echo $main_title; ?></p>
                             <?php else: ?>        
@@ -87,7 +87,7 @@ $hero_description_l = get_sub_field('hero_description_l');
                             <?php endif ?>
                         </div>
                         <div class="hero-partners-link hero-link-wrap">
-                            <a href="#"><?php _e('Svi naši partneri','ade'); ?> <i class="icon icon-angle-right"></i></a>
+                            <a href="#"><?php _e('Svi naši partneri','ade'); ?> <i class="icon icon-arrow-right"></i></a>
                         </div>
 
                     </div> <!-- /.hero-label-link-wrapper -->

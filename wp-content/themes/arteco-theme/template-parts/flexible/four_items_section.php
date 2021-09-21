@@ -25,13 +25,13 @@ $read_more_link_f = get_sub_field('read_more_link_f');
             <div class="row">
                 <div class="col-md-12 main-title-section-heading align-center">
                     <header>
-                        <h1><?php _e('Naši proizvodi i usluge','ade'); ?></h1>
+                        <h2><?php _e('Naši proizvodi i usluge','ade'); ?></h2>
                     </header>
                 </div>
                 <div class="four-items-description-item col-md-3">
                     <?php if ( $icon ) : ?>
                         <div class="four-items-item-icon">
-                            <i class="icon icon-<?php echo $icon; ?>"></i>
+                            <img src="<?php echo esc_url($icon['url']); ?>" alt="<?php echo esc_attr($icon['alt']); ?>" /> 
                         </div>
                     <?php endif; ?>
                     <?php if ( $title ) : ?>
@@ -45,15 +45,15 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $read_more_link ) : ?>
-                        <div class="four-items-item-read-more read-more-button-wrap">
-                            <a class="button button-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        <div class="four-items-item-read-more read-more-link-wrap">
+                            <a class="link link-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?> <i class="icon icon-arrow-right"></i></a>
                         </div>
                     <?php endif; ?>
                 </div> <!-- /.four-items-description-item col-md-3 -->
                 <div class="four-items-description-item col-md-3">
                     <?php if ( $icon_s ) : ?>
                         <div class="four-items-item-icon">
-                            <i class="icon icon-<?php echo $icon_s; ?>"></i>
+                            <img src="<?php echo esc_url($icon_s['url']); ?>" alt="<?php echo esc_attr($icon_s['alt']); ?>" />
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_s ) : ?>
@@ -67,15 +67,15 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $read_more_link_s ) : ?>
-                        <div class="four-items-item-read-more read-more-button-wrap">
-                            <a class="button button-primary" href="<?php echo $read_more_link_s; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        <div class="four-items-item-read-more read-more-link-wrap">
+                            <a class="link link-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?> <i class="icon icon-arrow-right"></i></a>
                         </div>
                     <?php endif; ?>
                 </div> <!-- /.four-items-description-item col-md-3 -->
                 <div class="four-items-description-item col-md-3">
                     <?php if ( $icon_t ) : ?>
                         <div class="four-items-item-icon">
-                            <i class="icon icon-<?php echo $icon_t; ?>"></i>
+                            <img src="<?php echo esc_url($icon_t['url']); ?>" alt="<?php echo esc_attr($icon_t['alt']); ?>" />
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_t ) : ?>
@@ -89,15 +89,15 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $read_more_link_t ) : ?>
-                        <div class="four-items-item-read-more read-more-button-wrap">
-                            <a class="button button-primary" href="<?php echo $read_more_link_t; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        <div class="four-items-item-read-more read-more-link-wrap">
+                            <a class="link link-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?> <i class="icon icon-arrow-right"></i></a>
                         </div>
                     <?php endif; ?>
                 </div> <!-- /.four-items-description-item col-md-3 -->
                 <div class="four-items-description-item col-md-3">
                     <?php if ( $icon_f ) : ?>
                         <div class="four-items-item-icon">
-                            <i class="icon icon-<?php echo $icon_f; ?>"></i>
+                            <img src="<?php echo esc_url($icon_f['url']); ?>" alt="<?php echo esc_attr($icon_f['alt']); ?>" />
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_f ) : ?>
@@ -111,8 +111,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $read_more_link_f ) : ?>
-                        <div class="four-items-item-read-more read-more-button-wrap">
-                            <a class="button button-primary" href="<?php echo $read_more_link_f; ?>"><?php _e('Vidi više','ade'); ?></a>
+                        <div class="four-items-item-read-more read-more-link-wrap">
+                            <a class="link link-primary" href="<?php echo $read_more_link; ?>"><?php _e('Vidi više','ade'); ?> <i class="icon icon-arrow-right"></i></a>
                         </div>
                     <?php endif; ?>
                 </div> <!-- /.four-items-description-item col-md-3 -->

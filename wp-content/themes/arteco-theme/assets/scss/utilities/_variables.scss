@@ -1,11 +1,13 @@
 // Container widths
-$container-width: 1170px;
+$container-width: 1550px;
+// $container-wide-width: 1470px;
 $container-narrow-width: 990px;
 
 // Colors
 $primary-color:		#757576;
 $secondary-color:	#37383C;
 $tertiary-color:	#E49960;
+$tertiary-color-100:#FCF4EE;
 $white:				#ffffff;
 $black:				#000000;
 $gray:				#aeaeae;
@@ -40,6 +42,7 @@ $lt: 1366px;
 $ls: 1280px;
 $lg: 1199px;
 $md: 991px;
+$tab: 800px;
 $sm: 767px;
 $mb: 480px;
 $ip: 420px;

@@ -34,47 +34,53 @@
 	@if $filename == angle-up {
 		$char: "\E004";
 	}
-	@if $filename == awesome-plus {
+	@if $filename == arrow-left {
 		$char: "\E005";
 	}
-	@if $filename == chimney {
+	@if $filename == arrow-right {
 		$char: "\E006";
 	}
-	@if $filename == facebook {
+	@if $filename == awesome-plus {
 		$char: "\E007";
 	}
-	@if $filename == google-plus-g {
+	@if $filename == chimney {
 		$char: "\E008";
 	}
-	@if $filename == industry {
+	@if $filename == facebook {
 		$char: "\E009";
 	}
-	@if $filename == instagram {
+	@if $filename == google-plus-g {
 		$char: "\E00A";
 	}
-	@if $filename == linkedin {
+	@if $filename == industry {
 		$char: "\E00B";
 	}
-	@if $filename == pinterest {
+	@if $filename == instagram {
 		$char: "\E00C";
 	}
-	@if $filename == puzzle-piece {
+	@if $filename == linkedin {
 		$char: "\E00D";
 	}
-	@if $filename == search {
+	@if $filename == pinterest {
 		$char: "\E00E";
 	}
-	@if $filename == toolbox {
+	@if $filename == puzzle-piece {
 		$char: "\E00F";
 	}
-	@if $filename == twitter {
+	@if $filename == search {
 		$char: "\E010";
 	}
-	@if $filename == warehouse-alt {
+	@if $filename == toolbox {
 		$char: "\E011";
 	}
-	@if $filename == youtube {
+	@if $filename == twitter {
 		$char: "\E012";
+	}
+	@if $filename == warehouse-alt {
+		$char: "\E013";
+	}
+	@if $filename == youtube {
+		$char: "\E014";
 	}
 
 	@return $char;
@@ -102,6 +108,12 @@
 }
 .icon-angle-up {
 	@include icon(angle-up);
+}
+.icon-arrow-left {
+	@include icon(arrow-left);
+}
+.icon-arrow-right {
+	@include icon(arrow-right);
 }
 .icon-awesome-plus {
 	@include icon(awesome-plus);

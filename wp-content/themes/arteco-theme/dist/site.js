@@ -441,7 +441,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			init: function init() {
 				if (_this) {
 					this.$dom.toggleIcon.click(function () {
-						$(this).toggleClass("highlight");
+						// $( this ).parent('.hero-decription-icon-animate-wrap').toggleClass( "toggled-content" );
+						$(this).parent('.hero-decription-icon-animate-wrap').find('.hero-text-description').slideToggle("slow");;
 					});
 				}
 			}
