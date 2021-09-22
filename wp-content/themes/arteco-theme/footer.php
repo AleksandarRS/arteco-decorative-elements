@@ -8,6 +8,10 @@
  */
 
 ?>
+<?php 
+	$newsletter_title = get_field('newsletter_title', 'option');
+	$newsletter_shortcode = get_field('newsletter_shortcode', 'option');
+?>
 			</div><!-- #content -->
 
 			<section class="newsletter-section">
@@ -15,10 +19,18 @@
 					<div class="newsletter-section-inner">
 						<div class="container">
 							<div class="row newsletter-row">
-								<div class="col-md-12 align-center newsletter-cta">
-									<?php echo do_shortcode('[mc4wp_form id="180"]'); ?>
-								</div>
-									
+								<?php if($newsletter_title): ?>
+									<div class="col-md-6 newsletter-heading">
+										<header class="title-header">
+											<h2><?php echo $newsletter_title; ?></h2>
+										</header>
+									</div>
+								<?php endif ?>
+								<?php if($newsletter_title): ?>
+									<div class="col-md-6 align-center newsletter-cta">
+										<?php echo $newsletter_shortcode; ?>
+									</div>
+								<?php endif ?>
 							</div>
 						</div>
 							

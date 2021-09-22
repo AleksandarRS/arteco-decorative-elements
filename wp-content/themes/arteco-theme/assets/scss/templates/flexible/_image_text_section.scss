@@ -1,0 +1,43 @@
+.image-text-section-main-image-inner {
+    position: relative;
+    text-align: right;
+    max-width: 473px;
+    // background-color: green;
+    &:after,
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+    }
+    &:before {
+        border-left: 2px solid $tertiary-color;
+        height: 100px;
+        width: 1px;
+        transform: rotate(45deg);
+        bottom: -7.1%;
+        left: -14px;
+
+    }
+    &:after {
+        border-bottom: 2px solid $tertiary-color;
+        border-left: 2px solid $tertiary-color;
+        border-right: 2px solid $tertiary-color;
+        border-top-left-radius: 233px;
+        border-top-right-radius: 233px;
+        border-top: 2px solid $tertiary-color;
+        bottom: 0;
+        height: 105%;
+        left: -50px;
+        top: 0;
+        width: 100%;
+        z-index: 0;
+    }
+    img {
+        position: relative;
+        display: block;
+        margin-left: auto;
+        border-top-left-radius: 233px;
+        border-top-right-radius: 233px;
+        z-index: 1;
+    }
+}

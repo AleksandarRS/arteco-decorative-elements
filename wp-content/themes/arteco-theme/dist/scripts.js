@@ -430,7 +430,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    	# Cache dom and strings
    -------------------------------------------------------------------------------*/
 			$dom: {
-				toggleIcon: $('.hero-icon')
+				toggleIcon: $('.hero-icon'),
+				toggleSearchIcon: $('.toggle-icon')
 			},
 
 			vars: {},
@@ -442,7 +443,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				if (_this) {
 					this.$dom.toggleIcon.click(function () {
 						// $( this ).parent('.hero-decription-icon-animate-wrap').toggleClass( "toggled-content" );
-						$(this).parent('.hero-decription-icon-animate-wrap').find('.hero-text-description').slideToggle("slow");;
+						$(this).parent('.hero-decription-icon-animate-wrap').find('.hero-text-description').slideToggle("slow");
+					});
+					this.$dom.toggleSearchIcon.click(function () {
+						$(this).parents('.header-social-search-menu-item').toggleClass("search-opened");
 					});
 				}
 			}

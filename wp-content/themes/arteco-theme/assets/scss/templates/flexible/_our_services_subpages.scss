@@ -1,3 +1,9 @@
+.services-subpages-list-wrapper {
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 .services-subpages-list {
     display: flex;
     flex-wrap: wrap;
@@ -5,7 +11,7 @@
     padding-left: 0;
     .services-subpages-item {
         flex: 0 0 calc(58% - 20px);
-        height: 300px;
+        height: 400px;
         margin: 10px;
         max-width: calc(58% - 20px);
         position: relative;
@@ -48,13 +54,17 @@
                 width: 100%;
                 z-index: 0;
             }
-            h2 {
+            .title-header {
                 bottom: 0;
                 color: $white;
                 left: 0;
                 padding: 30px;
                 position: absolute;
                 z-index: 1;
+            }
+            .services-main-title {
+                color: $white;
+                margin-top: 0;
             }
         }
     }

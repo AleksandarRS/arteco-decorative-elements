@@ -56,7 +56,7 @@ class FrmProFormsHelper {
 
 				echo 'var frmHide=' . json_encode( $frm_vars['dep_logic_fields'] ) . ';';
 				echo 'if(typeof __frmHideOrShowFields == "undefined"){__frmHideOrShowFields=frmHide;}';
-				echo 'else{__frmHideOrShowFields=jQuery.extend(__frmHideOrShowFields,frmHide);}';
+				echo 'else{__frmHideOrShowFields=__frmHideOrShowFields.concat(frmHide);}';
 			}
 		} else {
 			// Save time and just hide the fields that are in frm_hide_fields
@@ -468,6 +468,7 @@ echo $custom_options;
 			'ajax_submit'          => 0,
 			'cookie_expiration'    => 8000,
 			'prev_value'           => __( 'Previous', 'formidable-pro' ),
+			'draft_label'          => __( 'Save Draft', 'formidable-pro' ),
 			'transition'           => '',
 			'submit_align'         => '',
 			'submit_conditions'    => array(

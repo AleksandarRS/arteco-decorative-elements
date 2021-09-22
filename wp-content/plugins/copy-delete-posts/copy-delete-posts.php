@@ -4,10 +4,11 @@
  * Plugin Name: Copy & Delete Posts
  * Plugin URI: https://copy-delete-posts.com
  * Description: The best solution to easily make duplicates of your posts & pages, and delete them in one go.
- * Version: 1.1.8
+ * Version: 1.1.9
  * Author: Copy Delete Posts
  * Author URI: https://copy-delete-posts.com/
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 // Exit if accessed directly.
 if (!defined('ABSPATH'))
     exit;
@@ -29,7 +30,7 @@ analyst_init(array(
  * @since 1.0.0
  */
 // Plugin constants
-define('CDP_VERSION', '1.1.8');
+define('CDP_VERSION', '1.1.9');
 define('CDP_WP_VERSION', get_bloginfo('version'));
 define('CDP_SCRIPT_DEBUG', false);
 define('CDP_ROOT_DIR', __DIR__);
@@ -305,7 +306,8 @@ add_action('admin_enqueue_scripts', function () {
         'strAreYouSure' => __('Are you REALLY sure?', 'copy-delete-posts'),
         'strYouAreCrazy' => __('You\'re crazy! – Here is the output:', 'copy-delete-posts'),
         'strDebugOutputEnd' => __('–––––––––––––- END OF THE DEBUG OUTPUT –––––––––––––- ', 'copy-delete-posts'),
-
+        'copySuccessfull' => __('Copy to clipboard was successfull.', 'copy-delete-posts'),
+        'copyFailed' => __('Copy to clipboard failed, your browser does not support this function.', 'copy-delete-posts'),
     ];
     wp_localize_script('cdp', 'cdpJS', $cdpJSArgs);
 

@@ -49,7 +49,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?>
 			</div>
 			</div>
-			<div class="frm-right-panel"></div>
 		</div>
 	</div>
 </div>

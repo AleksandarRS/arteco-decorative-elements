@@ -1,3 +1,96 @@
 .site-branding-main-logo {
     max-width: 250px;
+    a {
+        display: block;
+        padding-top: 15px;
+    }
+}
+.logo-menu-wrapper,
+.header-social-search-menu-item,
+.lf-social-wrapper,
+.header-social-search-wrap {
+    align-items: center;
+    display: flex;
+}
+.header-search > i,
+.social-icon-menu-items a {
+    align-items: center;
+    background-color: $tertiary-color-200;
+    border-radius: 50%;
+    border: 1px solid $tertiary-color;
+    color: $tertiary-color;
+    display: flex;
+    font-size: $font-size-large;
+    height: 50px;
+    justify-content: center;
+    margin: 0 5px;
+    width: 50px;
+    @include transition-all;
+    &:hover {
+        background-color: $white;
+        border-color: $primary-color;
+        color: $primary-color;
+    }
+}
+.social-icon-menu-items {
+    a {
+        i {
+            display: block;
+            padding-top: 4px;
+        }
+    }
+}
+.header-search {
+    .header-search-position {
+        background-color: $white;
+        height: 100%;
+        left: 0;
+        padding-top: 18vh;
+        position: fixed;
+        right: 0;
+        text-align: center;
+        top: -100%;
+        z-index: 99;
+        @include transition-all;
+        .search-opened & {
+            top: 0;
+        }
+    }
+    i {
+        cursor: pointer;
+    }
+    > .icon-search {
+        display: flex;
+        .search-opened & {
+            display: none;
+        }
+    }
+    .icon-times {
+        display: none;
+        .search-opened & {
+            display: flex;
+        }
+    }
+    .toggle-icon {
+        position: relative;
+        z-index: 999999;
+    }
+    
+    .search-field {
+        border-bottom: 2px solid $tertiary-color;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        font-size: $font-size-large + 50;
+    }
+    .submit-button-search {
+        background-color: transparent;
+        border: none;
+        color: $tertiary-color;
+        font-size: $font-size-large + 50;
+        @include transition-color;
+        &:hover {
+            color: $primary-color;
+        }
+    }
 }

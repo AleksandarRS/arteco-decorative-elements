@@ -42,13 +42,13 @@ class FrmProAddonsController extends FrmAddonsController {
 
 		} elseif ( $addon['status']['type'] === 'installed' ) {
 			?>
-			<a rel="<?php echo esc_attr( $addon['plugin'] ); ?>" class="button button-primary frm-button-primary frm-activate-addon <?php echo esc_attr( empty( $addon['activate_url'] ) ? 'frm_hidden' : '' ); ?>">
+			<a href="#" rel="<?php echo esc_attr( $addon['plugin'] ); ?>" class="button button-primary frm-button-primary frm-activate-addon <?php echo esc_attr( empty( $addon['activate_url'] ) ? 'frm_hidden' : '' ); ?>">
 				<?php esc_html_e( 'Activate', 'formidable' ); ?>
 			</a>
 			<?php
 		} elseif ( ! empty( $addon['url'] ) ) {
 			?>
-			<a class="frm-install-addon button button-primary frm-button-primary" rel="<?php echo esc_attr( $addon['url'] ); ?>" aria-label="<?php esc_attr_e( 'Install', 'formidable' ); ?>">
+			<a href="#" class="frm-install-addon button button-primary frm-button-primary" rel="<?php echo esc_attr( $addon['url'] ); ?>" aria-label="<?php esc_attr_e( 'Install', 'formidable' ); ?>">
 				<?php esc_html_e( 'Install', 'formidable' ); ?>
 			</a>
 			<?php

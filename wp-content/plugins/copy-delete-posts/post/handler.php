@@ -82,6 +82,8 @@ add_action('wp_ajax_cdp_action_handling', function () {
                     cdp_just_kill_task();
                 else if ($_POST['f'] == 'give_me_current_tasks')
                     cdp_just_get_tasks();
+                else if ($_POST['f'] == 'hide_cron_notice')
+                    cdp_hide_perf_notice();
                 else if ($_POST['f'] == 'review_dismiss')
                     cdp_review();
                 else if ($_POST['f'] == 'debug_function')
@@ -278,6 +280,9 @@ function cdp_save_plugin_options($areWePro) {
  * @since 1.0.0
  */
 function cdp_insert_new_post($areWePro = false) {
+
+    // Performance copy time start
+    $timein = microtime(true);
 
     // Create output array which will be returned to requester
     $output = array('status' => 'success');
@@ -859,6 +864,33 @@ function cdp_insert_new_post($areWePro = false) {
     if ($areWePro && function_exists('cdpp_handle_multisite_after'))
         cdpp_handle_multisite_after($site);
 
+    // Check performance by time
+    $copyTime = microtime(true) - $timein;
+    $copyTimePerOne = $copyTime / $times;
+
+    // Set only if had good performance all the time
+    $isSlowPerf = true;
+    if (get_option('cdp_latest_slow_performance', false) == false) {
+      $isSlowPerf = false;
+    }
+
+    // Check if the copy time of one page was slower than 0.051 of second
+    if ($copyTimePerOne > 0.051) {
+      $isSlowPerf = true;
+    }
+
+    // Set the performance status
+    update_option('cdp_latest_slow_performance', $isSlowPerf);
+
+    // Update history with logs
+    $logs = get_option('cdp_copy_logs_times', array());
+    if (sizeof($logs) >= 50) {
+      $logs = array_slice($logs, 0, 48);
+    }
+    $logs = array_values($logs);
+    array_unshift($logs, array('amount' => $times, 'time' => $copyTime, 'perOne' => $copyTimePerOne, 'data' => time(), 'memory' => memory_get_usage(), 'peak' => memory_get_peak_usage(true)));
+    update_option('cdp_copy_logs_times', $logs);
+
     echo json_encode(cdp_sanitize_array($output));
 }
 
@@ -1155,6 +1187,18 @@ function cdp_just_get_tasks() {
         echo json_encode(array('status' => 'success', 'tasks' => cdp_sanitize_array($cdp_cron)));
     else
         echo json_encode(array('status' => 'fail', 'type' => 'error', 'msg' => __('We couldn\'t catch current tasks, please try again later.', 'copy-delete-posts')));
+}
+
+/** –– * */
+
+/** –– **\
+ * This function will remove performance notice
+ * @return void
+ */
+function cdp_hide_perf_notice() {
+  update_option('cdp_dismiss_perf_notice', true);
+  update_option('cdp_latest_slow_performance', false);
+  echo json_encode(array('status' => 'success'));
 }
 
 /** –– * */

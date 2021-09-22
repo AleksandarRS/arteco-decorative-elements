@@ -2,8 +2,8 @@
 Contributors: CopyDeletePosts, copydelete
 Tags: Duplicate post, Copy posts, Copy pages, Duplicate posts, Duplicate pages, Clone posts, Clone pages, Delete posts, Delete pages, Duplicator, copy post, copy page
 Requires at least: 4.6
-Tested up to: 5.8
-Stable tag: 1.1.8
+Tested up to: 5.8.1
+Stable tag: 1.1.9
 License: GPLv3
 Requires PHP: 5.6
 
@@ -151,6 +151,13 @@ Copy Delete Posts WordPress plugin doesn’t store any site visitor information 
 
 == Changelog ==
 
+= 1.1.9 =
+* Plugin translation-ready
+* Updated styles
+* Added performance checks for individual servers
+* Added logs for last 50 copy processes
+* Added new notices
+
 = 1.1.8 =
 * Performance adjustements for PHP 8
 * Plugin prepared for translation
@@ -243,8 +250,9 @@ Copy Delete Posts WordPress plugin doesn’t store any site visitor information 
 * Initial release
 
 == Upgrade Notice ==
-= 1.1.8 =
-* Performance adjustements for PHP 8
-* Plugin prepared for translation
-* Improvements for ACF plugin kind
-* Fixed activation/deactivation issues for Pro
+= 1.1.9 =
+* Plugin translation-ready
+* Updated styles
+* Added performance checks for individual servers
+* Added logs for last 50 copy processes
+* Added new notices

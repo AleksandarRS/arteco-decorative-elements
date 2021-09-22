@@ -253,6 +253,13 @@ class FrmProNestedFormsController {
 			'is_repeat_limit_reached' => self::is_repeat_limit_reached( $repeat_limit, $row_count + 1 ),
 		);
 
+		if ( is_callable( 'FrmFormsController::add_js_validate_form_to_global_vars' ) ) {
+			$form = FrmForm::getOne( $field->form_id );
+			if ( ! empty( $form->options['js_validate'] ) ) {
+				FrmFormsController::add_js_validate_form_to_global_vars( $form );
+			}
+		}
+
 		ob_start();
 		self::display_single_iteration_of_nested_form( $field_name, $args );
 		$response['html'] = ob_get_contents();
@@ -787,28 +794,14 @@ class FrmProNestedFormsController {
 			return '';
 		}
 
-		$frm_settings = FrmAppHelper::get_settings();
-		if ( $frm_settings->old_css ) {
-			$classes = array(
-				2 => '_half',
-				3 => '_third',
-				4 => '_fourth',
-				5 => '_fifth',
-				6 => '_sixth',
-				7 => '_seventh',
-				8 => '_eighth',
-			);
-			$class = ( isset( $classes[ $count ] ) ) ? $classes[ $count ] : '';
+		if ( 2 == $count ) {
+			$class = array( 10, 2 );
+		} elseif ( $count < 13 ) {
+			$field_width  = floor( 12 / ( $count ) );
+			$submit_width = 12 - ( $field_width * ( $count - 1 ) );
+			$class        = array( $field_width, $submit_width );
 		} else {
-			if ( 2 == $count ) {
-				$class = array( 10, 2 );
-			} elseif ( $count < 13 ) {
-				$field_width = floor( 12 / ( $count ) );
-				$submit_width = 12 - ( $field_width * ( $count - 1 ) );
-				$class = array( $field_width, $submit_width );
-			} else {
-				$class = '';
-			}
+			$class = '';
 		}
 
 		return $class;

@@ -391,7 +391,22 @@ class FrmProAppController {
 			die();
 		}
 
-		if ( ! FrmProAppHelper::views_is_installed() && self::there_are_views_in_the_database() ) {
+		if ( FrmProAppHelper::views_is_installed() ) {
+			if ( self::has_nested_views_plugin() ) {
+				add_filter( 'frm_message_list', 'FrmProAppController::deprecating_nested_views_notice' );
+
+				$message = array(
+					'key'     => 'deprecating_nested_views_notice',
+					'subject' => 'Nested Views will be removed soon!',
+					'message' => self::get_nested_views_deprecation_message(),
+					'icon'    => 'frm_report_problem_icon',
+					'type'    => 'news',
+					'cta'     => self::get_nested_views_cta(),
+				);
+				$inbox   = new FrmInbox();
+				$inbox->add_message( $message );
+			}
+		} elseif ( self::there_are_views_in_the_database() ) {
 			$action = FrmAppHelper::get_param( 'frm_action' );
 			if ( ! $action ) {
 				if ( ! get_option( 'frm_missing_views_dismissed' ) ) {
@@ -405,6 +420,31 @@ class FrmProAppController {
 		}
 
 		self::remove_upsells();
+	}
+
+	public static function deprecating_nested_views_notice() {
+		$messages[] = '<p>' . self::get_nested_views_deprecation_message() . '</p><p>' . self::get_nested_views_cta() . '</p>';
+		return $messages;
+	}
+
+	private static function get_nested_views_deprecation_message() {
+		return 'The nested Formidable Views plugin will be removed soon! We recommend downloading and activating Views as soon as possible to avoid future issues!';
+	}
+
+	private static function get_nested_views_cta() {
+		ob_start();
+		FrmProAddonsController::conditional_action_button( 'views', array( 'medium' => 'nested-views-deprecation-notice' ) );
+		return ob_get_clean();
+	}
+
+	private static function has_nested_views_plugin() {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		$file_name   = 'views/formidable-views.php';
+		$stand_alone = is_plugin_active( 'formidable-' . $file_name );
+		return file_exists( FrmProAppHelper::plugin_path() . '/' . $file_name ) && ! $stand_alone;
 	}
 
 	private static function there_are_views_in_the_database() {

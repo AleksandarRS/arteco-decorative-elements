@@ -151,6 +151,16 @@ class FrmProFieldLookup extends FrmFieldType {
 			$form_fields = FrmField::getAll( $where );
 		}
 
+		/**
+		 * Allows modifying fields in field selection of Lookup field.
+		 *
+		 * @since 5.0.04
+		 *
+		 * @param array $fields The fields.
+		 * @param array $args   Includes `form_id`, `field_type`.
+		 */
+		$form_fields = apply_filters( 'frm_pro_fields_in_lookup_selection', $form_fields, compact( 'form_id', 'field_type' ) );
+
 		return $form_fields;
 	}
 

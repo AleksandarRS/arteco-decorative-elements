@@ -235,6 +235,8 @@ class FrmProHooksController {
 
 		// Entries Controller
 		add_action( 'frm_after_show_entry', 'FrmProEntriesController::show_comments' );
+		add_filter( 'frm_field_column_is_sortable', 'FrmProEntriesController::field_column_is_sortable', 10, 2 );
+		add_filter( 'frm_handle_field_column_sort', 'FrmProEntriesController::handle_field_column_sort', 10, 3 );
 
 		add_action( 'add_meta_boxes', 'FrmProEntriesController::create_entry_from_post_box', 10, 2 );
 

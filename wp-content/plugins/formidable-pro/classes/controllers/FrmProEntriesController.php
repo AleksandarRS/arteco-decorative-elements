@@ -3155,7 +3155,8 @@ class FrmProEntriesController {
 		} else {
 			$obj = array();
 			foreach ( $errors as $field => $error ) {
-				$field_id = str_replace( 'field', '', $field );
+				$field_id         = str_replace( 'field', '', $field );
+				$error            = self::maybe_modify_ajax_error( $error, $field_id, $form, $errors );
 				$obj[ $field_id ] = $error;
 			}
 			$response['errors'] = $obj;
@@ -3179,6 +3180,52 @@ class FrmProEntriesController {
 
 		echo json_encode( $response );
 		wp_die();
+	}
+
+	/**
+	 * If a field has custom HTML for errors, apply it around the message.
+	 *
+	 * @since 5.0.03
+	 *
+	 * @param string   $error
+	 * @param string   $field_id
+	 * @param stdClass $form the form being submitted (not necessarily the field's form when embedded/repeated).
+	 * @param array    $errors all errors that were caught in this form submission, passed into the frm_before_replace_shortcodes filter for reference.
+	 * @return string
+	 */
+	private static function maybe_modify_ajax_error( $error, $field_id, $form, $errors ) {
+		if ( ! is_callable( 'FrmFieldsController::pull_custom_error_body_from_custom_html' ) ) {
+			// this function only exists since formidable lite 5.0.03
+			// if the lite version has not been updated, leave the error unmodified.
+			return $error;
+		}
+
+		if ( false !== strpos( $field_id, '-' ) ) {
+			// repeated fields look like field_id-repeater_id-iteration, so pull the first value for the field id.
+			list( $use_field_id ) = explode( '-', $field_id );
+		} else {
+			$use_field_id = $field_id;
+		}
+
+		if ( ! is_numeric( $use_field_id ) ) {
+			return $error;
+		}
+
+		$use_field = FrmField::getOne( $use_field_id );
+
+		if ( ! $use_field ) {
+			return $error;
+		}
+
+		$use_field  = FrmFieldsHelper::setup_edit_vars( $use_field );
+		$error_body = FrmFieldsController::pull_custom_error_body_from_custom_html( $form, $use_field, $errors );
+
+		if ( false !== $error_body ) {
+			$error = str_replace( '[error]', $error, $error_body );
+			$error = str_replace( '[key]', $field_id, $error );
+		}
+
+		return $error;
 	}
 
 	/**
@@ -3461,6 +3508,44 @@ class FrmProEntriesController {
 	public static function redirect_url( $url ) {
 		$url = str_replace( array( ' ', '[', ']', '|', '@' ), array( '%20', '%5B', '%5D', '%7C', '%40' ), $url );
 		return $url;
+	}
+
+	/**
+	 * @param stdClass $field
+	 * @return bool
+	 */
+	public static function field_column_is_sortable( $sortable, $field ) {
+		if ( ! $sortable && ! empty( $field->field_options['post_field'] ) ) {
+			$sortable_options = array( 'post_title', 'post_content', 'post_excerpt', 'post_name', 'post_date', 'post_custom', 'post_status' );
+			$sortable         = in_array( $field->field_options['post_field'], $sortable_options, true );
+		}
+		return $sortable;
+	}
+
+	/**
+	 * @param string $sort
+	 * @param int    $field_id
+	 * @param array  $field_options
+	 * @return string
+	 */
+	public static function handle_field_column_sort( $sort, $field_id, $field_options ) {
+		if ( '' !== $sort || empty( $field_options['post_field'] ) ) {
+			return $sort;
+		}
+
+		global $wpdb;
+
+		if ( 'post_custom' === $field_options['post_field'] ) {
+			if ( empty( $field_options['custom_field'] ) ) {
+				return '';
+			}
+
+			$meta_key = sanitize_key( $field_options['custom_field'] );
+			return ', (SELECT m.meta_value FROM ' . $wpdb->prefix . 'postmeta m INNER JOIN ' . $wpdb->prefix . 'frm_items i ON i.post_id=m.post_id WHERE m.meta_key = "' . esc_sql( $meta_key ) . '" AND i.id = it.id) as meta_' . $field_id;
+		}
+
+		$column = sanitize_key( $field_options['post_field'] );
+		return ', (SELECT p.' . $column . ' FROM ' . $wpdb->prefix . 'posts p INNER JOIN ' . $wpdb->prefix . 'frm_items i ON i.post_id=p.ID WHERE i.id = it.id) as meta_' . $field_id;
 	}
 
 	/**

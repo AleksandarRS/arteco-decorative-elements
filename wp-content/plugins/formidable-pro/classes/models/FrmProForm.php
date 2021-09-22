@@ -18,6 +18,10 @@ class FrmProForm {
 			);
 		}
 
+		if ( isset( $options['draft_label'] ) ) {
+			$options['draft_label'] = sanitize_text_field( $options['draft_label'] );
+		}
+
 		$options['single_entry'] = ( isset( $values['options']['single_entry'] ) ) ? $values['options']['single_entry'] : 0;
 		if ( $options['single_entry'] ) {
 			$options['single_entry_type'] = ( isset( $values['options']['single_entry_type'] ) ) ? $values['options']['single_entry_type'] : 'cookie';

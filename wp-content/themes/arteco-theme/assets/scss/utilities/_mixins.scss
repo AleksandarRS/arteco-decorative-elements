@@ -1,4 +1,11 @@
-@mixin transition-all($property: all, $duration: .5s, $ease: ease, $delay: 0s){
+@mixin transition-all ($property: all, $duration: .5s, $ease: ease, $delay: 0s){
+	-webkit-transition: $property $duration $ease $delay;
+	-moz-transition: $property $duration $ease $delay;
+	-o-transition: $property $duration $ease $delay;
+	transition: $property $duration $ease $delay;
+}
+
+@mixin transition-color ($property: color, $duration: .5s, $ease: ease, $delay: 0s){
 	-webkit-transition: $property $duration $ease $delay;
 	-moz-transition: $property $duration $ease $delay;
 	-o-transition: $property $duration $ease $delay;

@@ -135,7 +135,7 @@ if ( isset( $values['open_editable'] ) && empty( $values['open_editable'] ) ) {
 
     <p>
 		<label for="save_draft">
-			<input type="checkbox" name="options[save_draft]" id="save_draft" value="1" <?php checked( $values['save_draft'], 1 ); ?> />
+			<input type="checkbox" name="options[save_draft]" id="save_draft" value="1" <?php checked( $values['save_draft'], 1 ); ?> onchange="document.getElementById( 'frm_save_draft_label_wrapper' ).classList.toggle( 'frm_hidden', ! this.checked );" />
 			<?php esc_html_e( 'Allow logged-in users to save drafts', 'formidable-pro' ); ?>
 		</label>
     </p>

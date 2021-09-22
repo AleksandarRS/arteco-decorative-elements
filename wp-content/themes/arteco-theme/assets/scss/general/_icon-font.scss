@@ -46,41 +46,53 @@
 	@if $filename == chimney {
 		$char: "\E008";
 	}
-	@if $filename == facebook {
+	@if $filename == envelope {
 		$char: "\E009";
 	}
-	@if $filename == google-plus-g {
+	@if $filename == facebook {
 		$char: "\E00A";
 	}
-	@if $filename == industry {
+	@if $filename == google-plus-g {
 		$char: "\E00B";
 	}
-	@if $filename == instagram {
+	@if $filename == industry {
 		$char: "\E00C";
 	}
-	@if $filename == linkedin {
+	@if $filename == instagram {
 		$char: "\E00D";
 	}
-	@if $filename == pinterest {
+	@if $filename == linkedin {
 		$char: "\E00E";
 	}
-	@if $filename == puzzle-piece {
+	@if $filename == map-marker-alt {
 		$char: "\E00F";
 	}
-	@if $filename == search {
+	@if $filename == phone {
 		$char: "\E010";
 	}
-	@if $filename == toolbox {
+	@if $filename == pinterest {
 		$char: "\E011";
 	}
-	@if $filename == twitter {
+	@if $filename == puzzle-piece {
 		$char: "\E012";
 	}
-	@if $filename == warehouse-alt {
+	@if $filename == search {
 		$char: "\E013";
 	}
-	@if $filename == youtube {
+	@if $filename == times {
 		$char: "\E014";
+	}
+	@if $filename == toolbox {
+		$char: "\E015";
+	}
+	@if $filename == twitter {
+		$char: "\E016";
+	}
+	@if $filename == warehouse-alt {
+		$char: "\E017";
+	}
+	@if $filename == youtube {
+		$char: "\E018";
 	}
 
 	@return $char;
@@ -121,6 +133,9 @@
 .icon-chimney {
 	@include icon(chimney);
 }
+.icon-envelope {
+	@include icon(envelope);
+}
 .icon-facebook {
 	@include icon(facebook);
 }
@@ -136,6 +151,12 @@
 .icon-linkedin {
 	@include icon(linkedin);
 }
+.icon-map-marker-alt {
+	@include icon(map-marker-alt);
+}
+.icon-phone {
+	@include icon(phone);
+}
 .icon-pinterest {
 	@include icon(pinterest);
 }
@@ -144,6 +165,9 @@
 }
 .icon-search {
 	@include icon(search);
+}
+.icon-times {
+	@include icon(times);
 }
 .icon-toolbox {
 	@include icon(toolbox);

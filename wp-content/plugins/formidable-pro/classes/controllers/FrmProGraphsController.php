@@ -534,7 +534,7 @@ class FrmProGraphsController {
 		self::add_line_graph_options( $type, $atts, $options );
 		self::add_table_options( $type, $atts, $options );
 
-		if ( $type != 'pie' && $type != 'geo' ) {
+		if ( $type !== 'pie' && $type !== 'geo' ) {
 
 			if ( isset( $atts['is_stacked'] ) && $atts['is_stacked'] ) {
 				$options['isStacked'] = true;
@@ -1321,36 +1321,36 @@ class FrmProGraphsController {
 			return;
 		}
 
-		if ( self::is_created_at_or_updated_at( $atts['x_axis_field'] ) || self::is_date_field( $atts['x_axis_field'] ) ) {
+		if ( ! self::is_created_at_or_updated_at( $atts['x_axis_field'] ) && ! self::is_date_field( $atts['x_axis_field'] ) ) {
+			return;
+		}
 
-			$start_date = self::get_start_date_for_x_axis_date_include_zero_graph( $atts, $graph_data );
-			$end_date = self::get_end_date_for_x_axis_date_include_zero_graph( $atts, $graph_data );
-			$group_by = isset( $atts['group_by'] ) ? $atts['group_by'] : '';
+		$start_date     = self::get_start_date_for_x_axis_date_include_zero_graph( $atts, $graph_data );
+		$end_date       = self::get_end_date_for_x_axis_date_include_zero_graph( $atts, $graph_data );
+		$group_by       = isset( $atts['group_by'] ) ? $atts['group_by'] : '';
+		$all_dates      = self::get_all_dates_for_period( $start_date, $end_date, $group_by );
+		$new_graph_data = array();
+		$count          = 0;
 
-			$all_dates = self::get_all_dates_for_period( $start_date, $end_date, $group_by );
-			$new_graph_data = array();
-			$count = 0;
-
-			foreach ( $all_dates as $date_str ) {
-				if ( isset( $graph_data[ $count ] ) && $graph_data[ $count ][0] == $date_str ) {
-					$new_graph_data[] = $graph_data[ $count ];
-					$count++;
-				} else {
-					$add_row = array( $date_str );
-					if ( is_array( $atts['fields'] ) && ! empty( $atts['fields'] ) ) {
-						$field_count = count( $atts['fields'] );
-						for ( $i = 1; $i <= $field_count; $i++ ) {
-							$add_row[] = 0;
-						}
-					} else {
+		foreach ( $all_dates as $date_str ) {
+			if ( isset( $graph_data[ $count ] ) && $graph_data[ $count ][0] == $date_str ) {
+				$new_graph_data[] = $graph_data[ $count ];
+				$count++;
+			} else {
+				$add_row = array( $date_str );
+				if ( is_array( $atts['fields'] ) && ! empty( $atts['fields'] ) ) {
+					$field_count = count( $atts['fields'] );
+					for ( $i = 1; $i <= $field_count; $i++ ) {
 						$add_row[] = 0;
 					}
-					$new_graph_data[] = $add_row;
+				} else {
+					$add_row[] = 0;
 				}
+				$new_graph_data[] = $add_row;
 			}
-
-			$graph_data = $new_graph_data;
 		}
+
+		$graph_data = $new_graph_data;
 	}
 
 	/**
@@ -1403,25 +1403,25 @@ class FrmProGraphsController {
 	 */
 	private static function get_all_dates_for_period( $start_date, $end_date, $group_by ) {
 		$start_timestamp = strtotime( $start_date );
-		$end_timestamp = strtotime( $end_date ) + 86399;
-		$all_dates = array();
+		$end_timestamp   = strtotime( $end_date ) + 86399;
+		$all_dates       = array();
 
-		if ( $group_by == 'month' ) {
+		if ( $group_by === 'month' ) {
 			for ( $d = $start_timestamp; $d <= $end_timestamp; $d += 60 * 60 * 24 * 25 ) {
 				self::add_formatted_date_to_array( 'F Y', $d, $all_dates );
 			}
-		} else if ( $group_by == 'quarter' ) {
+		} elseif ( $group_by === 'quarter' ) {
 			for ( $d = $start_timestamp; $d <= $end_timestamp; $d += 60 * 60 * 24 * 80 ) {
 				self::add_formatted_date_to_array( 'quarter', $d, $all_dates );
 			}
-		} else if ( $group_by == 'year' ) {
+		} elseif ( $group_by === 'year' ) {
 			for ( $d = $start_timestamp; $d <= $end_timestamp; $d += 60 * 60 * 24 * 364 ) {
 				self::add_formatted_date_to_array( 'Y', $d, $all_dates );
 			}
 		} else {
-			$date_format = get_option('date_format');
+			$date_format = get_option( 'date_format' );
 			for ( $d = $start_timestamp; $d <= $end_timestamp; $d += 60 * 60 * 24 ) {
-				$all_dates[] = gmdate( $date_format, $d );
+				$all_dates[] = date_i18n( $date_format, $d, true );
 			}
 		}
 
@@ -1437,13 +1437,13 @@ class FrmProGraphsController {
 	 * @param array $all_dates
 	 */
 	private static function add_formatted_date_to_array( $format, $date, &$all_dates ) {
-		if ( 'quarter' == $format ) {
+		if ( 'quarter' === $format ) {
 			$date = self::convert_date_to_quarter( $date );
 		} else {
-			$date = gmdate( $format, $date );
+			$date = date_i18n( $format, $date, true );
 		}
 
-		if ( ! in_array( $date, $all_dates ) ) {
+		if ( ! in_array( $date, $all_dates, true ) ) {
 			$all_dates[] = $date;
 		}
 	}
@@ -1871,13 +1871,11 @@ class FrmProGraphsController {
 				return '';
 			}
 
-			if ( $atts['group_by'] == 'month' ) {
-				$x_value = gmdate( 'F Y', strtotime( $x_value ) );
-
-			} else if ( $atts['group_by'] == 'quarter' ) {
+			if ( $atts['group_by'] === 'month' ) {
+				$x_value = date_i18n( 'F Y', strtotime( $x_value ), true );
+			} elseif ( $atts['group_by'] === 'quarter' ) {
 				$x_value = self::convert_date_to_quarter( $x_value );
-
-			} else if ( $atts['group_by'] == 'year' ) {
+			} elseif ( $atts['group_by'] === 'year' ) {
 				$x_value = gmdate( 'Y', strtotime( $x_value ) );
 			} else {
 				$x_value = self::get_displayed_value( $atts['x_axis_field'], $x_value );
@@ -1926,11 +1924,11 @@ class FrmProGraphsController {
 
 		if ( preg_match('/-(01|02|03)-/', $value ) ) {
 			$value = __( 'Q1', 'formidable-pro' ) . ' ' . $y;
-		} else if ( preg_match('/-(04|05|06)-/', $value) ) {
+		} elseif ( preg_match('/-(04|05|06)-/', $value) ) {
 			$value = __( 'Q2', 'formidable-pro' ) . ' ' . $y;
-		} else if ( preg_match('/-(07|08|09)-/', $value) ) {
+		} elseif ( preg_match('/-(07|08|09)-/', $value) ) {
 			$value = __( 'Q3', 'formidable-pro' ) . ' ' . $y;
-		} else if ( preg_match('/-(10|11|12)-/', $value) ) {
+		} elseif ( preg_match('/-(10|11|12)-/', $value) ) {
 			$value = __( 'Q4', 'formidable-pro' ) . ' ' . $y;
 		}
 
@@ -1991,8 +1989,8 @@ class FrmProGraphsController {
 	 */
 	private static function convert_date_for_graph_display( $value ) {
 		if ( self::is_valid_date( $value ) ) {
-			$date_format = get_option('date_format');
-			$value = gmdate( $date_format, strtotime( $value ) );
+			$date_format = get_option( 'date_format' );
+			$value       = date_i18n( $date_format, strtotime( $value ), true );
 		} else {
 			$value = '';
 		}
@@ -2008,8 +2006,8 @@ class FrmProGraphsController {
 	 * @return string
 	 */
 	private static function convert_formatted_date_to_y_m_d( $date ) {
-		$date_format = get_option('date_format');
-		$date = DateTime::createFromFormat( $date_format, $date );
+		$date_format = get_option( 'date_format' );
+		$date        = DateTime::createFromFormat( $date_format, $date );
 		return $date->format( 'Y-m-d' );
 	}
 
@@ -2035,7 +2033,7 @@ class FrmProGraphsController {
 			} elseif ( is_array( $opt ) && $value == $opt['value'] ) {
 				$option_label = $opt['label'];
 				break;
-			} else if ( FrmFieldsHelper::is_other_opt( $opt_key ) ) {
+			} elseif ( FrmFieldsHelper::is_other_opt( $opt_key ) ) {
 				if ( FrmField::is_field_with_multiple_values( $field ) ) {
 					if ( $opt_key == $value ) {
 						$option_label = $opt;
@@ -2065,7 +2063,7 @@ class FrmProGraphsController {
 		}
 
 		// Flatten multi-dimensional array
-		if ( count( $atts['fields'] ) == 1 && FrmField::is_field_with_multiple_values( $field ) ) {
+		if ( count( $atts['fields'] ) === 1 && FrmField::is_field_with_multiple_values( $field ) ) {
 			FrmProStatisticsController::flatten_multi_dimensional_arrays_for_stats( $field, true, $field_values );
 		}
 
@@ -2116,7 +2114,7 @@ class FrmProGraphsController {
 	 * @param array $graph_data
 	 */
 	private static function add_user_defined_column_colors( $atts, &$graph_data ) {
-		if ( $atts['colors'] !== self::get_default_colors() ) {
+		if ( ! isset( $atts['x_axis'] ) && $atts['colors'] !== self::get_default_colors() ) {
 			self::apply_column_colors( $atts, $graph_data );
 		}
 	}
@@ -2347,12 +2345,12 @@ class FrmProGraphsController {
 	 */
 	private static function add_field_graphs_for_reports( $fields, &$data ) {
 		$atts = array(
-			'y_min' => 0,
-			'width'    => '100%',
-			'height'   => 'auto',
-			'bg_color' => 'transparent',
-			'title'    => '',
-			'chart_area' => 'top:30;height:90%',
+			'y_min'          => 0,
+			'width'          => '100%',
+			'height'         => 'auto',
+			'bg_color'       => 'transparent',
+			'title'          => '',
+			'chart_area'     => 'top:30;height:90%',
 			'x_slanted_text' => 0,
 			'x_order'        => 'field_opts',
 			'include_zero'   => 1,
@@ -2369,10 +2367,10 @@ class FrmProGraphsController {
 		foreach ( $fields as $field ) {
 			$atts['id'] = $field->id;
 
-			if ( $field->type == 'user_id' ) {
+			if ( $field->type === 'user_id' ) {
 				$atts['height'] = '400';
 				$atts['type'] = 'pie';
-			} elseif ( in_array( $field->type, $table_types ) ) {
+			} elseif ( in_array( $field->type, $table_types, true ) ) {
 				$atts['type'] = 'table';
 				$atts['height'] = 'auto';
 			} else {
@@ -2380,7 +2378,7 @@ class FrmProGraphsController {
 				$atts['height'] = '400';
 			}
 
-			if ( in_array( $field->type, array( 'radio', 'checkbox', 'select' ) ) ) {
+			if ( in_array( $field->type, array( 'radio', 'checkbox', 'select' ), true ) ) {
 				$atts['x_order'] = 'field_opts';
 			} elseif ( isset( $atts['x_order'] ) ) {
 				unset( $atts['x_order'] );
@@ -2398,10 +2396,10 @@ class FrmProGraphsController {
 			if ( strpos( $this_data, 'frm_no_data_graph' ) === false ) {
 				$data[ $field->id ] = $this_data;
 
-				if ( in_array( $field->type, $add_table ) ) {
-					$atts['type']   = 'table';
-					$atts['height'] = 'auto';
-					$this_data      = self::graph_shortcode( $atts );
+				if ( in_array( $field->type, $add_table, true ) ) {
+					$atts['type']                  = 'table';
+					$atts['height']                = 'auto';
+					$this_data                     = self::graph_shortcode( $atts );
 					$data[ $field->id . '_table' ] = $this_data;
 				}
 			}

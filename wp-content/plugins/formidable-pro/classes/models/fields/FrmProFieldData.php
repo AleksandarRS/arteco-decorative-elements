@@ -92,7 +92,7 @@ class FrmProFieldData extends FrmFieldType {
 			$selected_field = FrmField::getOne( $field['form_select'] );
 			if ( $selected_field ) {
 				$selected_form_id = FrmProFieldsHelper::get_parent_form_id( $selected_field );
-				$fields = FrmField::get_all_for_form( $selected_form_id );
+				$fields           = FrmProFieldsController::get_field_selection_fields( $selected_form_id );
 			} else {
 				$selected_field = '';
 			}

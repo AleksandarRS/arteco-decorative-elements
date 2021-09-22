@@ -479,4 +479,29 @@ class FrmProEntryFormatter extends FrmEntryFormatter {
 	private function process_shortcodes_in_label( $label ) {
 		return FrmFieldsHelper::basic_replace_shortcodes( $label, $this->entry->form_id, $this->entry );
 	}
+
+	/**
+	 * Check if an extra field is included
+	 *
+	 * @since 5.0.04
+	 *
+	 * @param FrmFieldValue $field_value
+	 *
+	 * @return bool
+	 */
+	protected function is_extra_field_included( $field_value ) {
+		$included = parent::is_extra_field_included( $field_value );
+
+		if ( $included ) {
+			$field = $field_value->get_field();
+			if ( ! isset( $field->temp_id ) ) {
+				$field->temp_id = $field->id;
+			}
+			$errors = array();
+			FrmProEntryMeta::validate_no_input_fields( $errors, $field );
+			$included = ! FrmProEntryMeta::is_field_conditionally_hidden( $field );
+		}
+
+		return $included;
+	}
 }

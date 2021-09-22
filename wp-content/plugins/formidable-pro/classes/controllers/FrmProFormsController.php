@@ -306,15 +306,12 @@ class FrmProFormsController {
 	}
 
 	public static function add_form_button_options( $values ) {
-        global $frm_vars;
-
-        $page_field = FrmProFormsHelper::has_field('break', $values['id'], true);
-
-        $post_types = FrmProAppHelper::get_custom_post_types();
-
-        $submit_conditions = $values['submit_conditions'];
-
-        require(FrmProAppHelper::plugin_path() . '/classes/views/frmpro-forms/add_form_button_options.php');
+		global $frm_vars;
+		$page_field        = FrmProFormsHelper::has_field( 'break', $values['id'], true );
+		$save_drafts       = ! empty( $values['save_draft'] );
+		$post_types        = FrmProAppHelper::get_custom_post_types();
+		$submit_conditions = $values['submit_conditions'];
+		require FrmProAppHelper::plugin_path() . '/classes/views/frmpro-forms/add_form_button_options.php';
     }
 
 	/**
@@ -606,7 +603,7 @@ class FrmProFormsController {
                     }
 					break;
                 case 'draft_label':
-                    $replace_with = __( 'Save Draft', 'formidable-pro' );
+                    $replace_with = esc_html( ! empty( $form->options['draft_label'] ) ? $form->options['draft_label'] : __( 'Save Draft', 'formidable-pro' ) );
 					break;
                 case 'save_draft':
                     if ( ! is_user_logged_in() || ! isset($form->options['save_draft']) || $form->options['save_draft'] != 1 || ( isset($values['is_draft']) && ! $values['is_draft'] ) ) {
@@ -1045,6 +1042,9 @@ class FrmProFormsController {
 		if ( isset( $form->options['save_draft'] ) && $form->options['save_draft'] ) {
 			if ( isset( $form->options['draft_msg'] ) ) {
 				$strings[] = 'draft_msg';
+			}
+			if ( ! empty( $form->options['draft_label'] ) ) {
+				$strings[] = 'draft_label';
 			}
 		}
 

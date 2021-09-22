@@ -568,7 +568,7 @@ class FrmProFieldsController {
 
 		if ( is_numeric( $form_id ) ) {
 			$selected_field = '';
-			$fields = FrmField::get_all_for_form( $form_id );
+			$fields = self::get_field_selection_fields( $form_id );
 			if ( $fields ) {
 				require( FrmProAppHelper::plugin_path() . '/classes/views/frmpro-fields/field-selection.php' );
 			}
@@ -582,6 +582,31 @@ class FrmProFieldsController {
 		}
 
 		wp_die();
+	}
+
+	/**
+	 * Gets fields for field selection.
+	 *
+	 * @since 5.0.04
+	 *
+	 * @param int $form_id Form ID.
+	 * @return object[]
+	 */
+	public static function get_field_selection_fields( $form_id ) {
+		$fields = FrmField::get_all_for_form( $form_id );
+		if ( $fields ) {
+			/**
+			 * Allows modifying fields in Field selection of Dynamic field.
+			 *
+			 * @since 5.0.04
+			 *
+			 * @param array $fields The fields.
+			 * @param array $args   Includes `form_id`.
+			 */
+			$fields = apply_filters( 'frm_pro_fields_in_dynamic_selection', $fields, compact( 'form_id' ) );
+		}
+
+		return $fields;
 	}
 
 	/**
@@ -1078,7 +1103,8 @@ class FrmProFieldsController {
 	public static function delete_temp_files() {
 		remove_action( 'pre_get_posts', 'FrmProFileField::filter_media_library', 99 );
 
-		$timestamp_cutoff = gmdate( 'Y-m-d H:i:s', strtotime( '-3 hours' ) );
+		$cutoff_period    = apply_filters( 'frm_delete_temp_files_period', '-3 hours' );
+		$timestamp_cutoff = gmdate( 'Y-m-d H:i:s', strtotime( $cutoff_period ) );
 		$old_uploads      = get_posts(
 			array(
 				'post_type'      => 'attachment',

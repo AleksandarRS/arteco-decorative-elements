@@ -21,7 +21,7 @@ $select_your_url = get_sub_field('select_your_url');
                         </div> <!-- /.image-text-section-main-image -->
                         <?php if ( $select_your_url ) : ?>
                             <div class="image-text-section-read-more-button-wrap read-more-button-wrap">
-                                <a class="button button-primary" href="<?php echo $select_your_url; ?>"><?php _e('Pročitaj više o Arteco-u','ade'); ?></a>
+                                <a class="button button-tertiary" href="<?php echo $select_your_url; ?>"><?php _e('Pročitaj više o Arteco-u','ade'); ?></a>
                             </div>
                         <?php endif; ?>
                     </div>

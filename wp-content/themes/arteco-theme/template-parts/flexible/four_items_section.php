@@ -35,8 +35,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $title ) : ?>
-                        <div class="four-items-item-title">
-                            <h3><?php echo $title; ?></h3>
+                        <div class="four-items-item-heading">
+                            <h2 class="four-items-title"><?php echo $title; ?></h2>
                         </div>
                     <?php endif; ?>
                     <?php if ( $text_description ) : ?>
@@ -57,8 +57,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_s ) : ?>
-                        <div class="four-items-item-title">
-                            <h3><?php echo $title_s; ?></h3>
+                        <div class="four-items-item-heading">
+                            <h2 class="four-items-title"><?php echo $title_s; ?></h2>
                         </div>
                     <?php endif; ?>
                     <?php if ( $text_description_s ) : ?>
@@ -79,8 +79,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_t ) : ?>
-                        <div class="four-items-item-title">
-                            <h3><?php echo $title_t; ?></h3>
+                        <div class="four-items-item-heading">
+                            <h2 class="four-items-title"><?php echo $title_t; ?></h2>
                         </div>
                     <?php endif; ?>
                     <?php if ( $text_description_t ) : ?>
@@ -101,8 +101,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
                         </div>
                     <?php endif; ?>
                     <?php if ( $title_f ) : ?>
-                        <div class="four-items-item-title">
-                            <h3><?php echo $title_f; ?></h3>
+                        <div class="four-items-item-heading">
+                            <h2 class="four-items-title"><?php echo $title_f; ?></h2>
                         </div>
                     <?php endif; ?>
                     <?php if ( $text_description_f ) : ?>
