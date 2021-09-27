@@ -4,12 +4,12 @@
 	padding-left: 25px;
 	a {
 		background-color: $tertiary-color;
-		border: 1px solid $tertiary-color;
 		border-radius: 5px;
+		border: 1px solid $tertiary-color;
+		color: $white;
 		display: inline-block;
 		font-weight: $font-weight-b;
-		padding: 10px 20px;
-		color: $white;
+		padding: 13px 29px;
 		@include transition-all;
 		&:hover {
 			background-color: $white;
@@ -54,7 +54,11 @@
 	
 		min-width: 270px;
 		top: 0;
-		margin: auto;
+		margin-right: auto;
+		margin-left: 40px;
+		@include min-mq ($fhd) {
+			margin-left: 88px;
+		}
 		@include max-mq($responsive-toggle-breakpoint) {
 			background-color: $white;
 			position: fixed;
@@ -134,11 +138,12 @@
 					}
 	
 					a {
-						padding: 10px 10px;
-						display: block;
-						position: relative;
-						font-weight: 600;
 						color: $secondary-color-600;
+						display: block;
+						font-weight: 400;
+						letter-spacing: 1.1px;
+						padding: 10px 10px;
+						position: relative;
 						width: 100%;
 
 						@include max-mq($mac) {

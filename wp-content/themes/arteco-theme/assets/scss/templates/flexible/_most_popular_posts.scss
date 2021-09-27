@@ -1,0 +1,44 @@
+.most-popular-posts-section-wrapper {
+    padding-bottom: 56px;
+}
+.posts-items-cards-wrapper {
+    padding-top: 15px;
+}
+.posts-items-cards-item {
+    > a {
+        background-color: $tertiary-color-200;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+        padding-bottom: 45px;
+    }
+    .post-featured-img-wrap {
+        background-position: center top;
+        background-size: cover;
+        height: 297px;
+    }
+    .read-more-link-wrap {
+        position: absolute;
+        bottom: 25px;
+    }
+    .post-title {
+        h2 {
+            margin-bottom: 0.2em;
+        }
+    }
+    .post-date {
+        font-size: $font-size-small;
+        font-weight: $font-weight-b;
+    }
+    .post-product-excerpt {
+        color: $primary-color;
+    }
+    .post-heading-excerpt-button-wraper {
+        padding: 22px 38px;
+    }
+}
+.see-all-posts {
+    padding-bottom: 20px;
+    padding-top: 43px;
+}

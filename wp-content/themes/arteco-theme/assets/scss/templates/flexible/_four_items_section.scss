@@ -1,0 +1,29 @@
+.four-items-section {
+    background-color: $tertiary-color-200;
+    .four-items-section-media-wrap {
+        padding-bottom: 87px;
+        padding-top: 52px;
+    }
+    .four-items-description-item {
+        margin-top: 10px;
+    }
+    .four-items-description-item-inner {
+        background-color: $white;
+        height: 100%;
+        padding: 41px 39px 68px;
+        position: relative;
+    }
+    .read-more-link-wrap {
+        bottom: 28px;
+        left: 34px;
+        position: absolute;
+    }
+    .four-items-item-heading {
+        padding-top: 29px;
+    }
+    .four-items-title {
+        font-size: $font-size-h3;
+        margin-bottom: 0.7em;
+    }
+    
+}

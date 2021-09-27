@@ -1,0 +1,62 @@
+.most-popular-products-section {
+    background-color: $tertiary-color-200;
+    .most-popular-products-section-wrapper {
+        padding-bottom: 50px;
+        padding-top: 50px;
+    }
+    .post-product-items-cards-wrapper {
+        padding-top: 15px;
+    }
+    .post-product-items-cards-item {
+        padding-left: 6px;
+        padding-right: 6px;
+        overflow: hidden;
+        &:nth-child(even) {
+            .post-featured-img-wrap {
+                order: 1;
+            }
+            .post-heading-excerpt-button-wrapper {
+                order: 0;
+            }
+        }
+        > a {
+            background-color: $white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+        .post-featured-img-wrap {
+            min-height: 284px;
+            img {
+                display: block;
+            }
+        }
+        .post-heading-excerpt-button-wrapper {
+            padding: 15px 25px 89px;
+            position: relative;
+            @include min-mq ($mac) {
+                padding: 25px 42px 89px;
+            }
+            .read-more-button-wrap {
+                position: absolute;
+                bottom: 40px;
+            }
+        }
+        .post-product-excerpt {
+            color: $primary-color;
+        }
+    }
+    .post-heading-excerpt-wrap {
+        padding-bottom: 5px;
+    }
+    .post-title {
+        h2 {
+            margin-bottom: 0.5em;
+        }
+    }
+    .see-all-products {
+        padding-bottom: 20px;
+        padding-top: 55px;
+    }
+}

@@ -1,3 +1,7 @@
+.services-subpages-section {
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
 .services-subpages-list-wrapper {
     flex: 0 0 100%;
     max-width: 100%;
@@ -11,7 +15,7 @@
     padding-left: 0;
     .services-subpages-item {
         flex: 0 0 calc(58% - 20px);
-        height: 400px;
+        height: 450px;
         margin: 10px;
         max-width: calc(58% - 20px);
         position: relative;
@@ -31,9 +35,9 @@
         display: block;
         height: 100%;
         .services-subpages-featured-image-position {
+            background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-            background-position: center;
             bottom: 0;
             height: 100%;
             left: 0;
@@ -42,9 +46,13 @@
             top: 0;
             width: 100%;
             &:after {
-                background-color: rgba($color: $primary-color, $alpha: 0.35);
+                background: transparent;
+                background: -webkit-linear-gradient(to right, transparent 0%, #221303 100%);
+                background: -moz-linear-gradient(to right, transparent 0%, #221303 100%);
+                background: linear-gradient(to right, transparent 0%, #221303 100%);
                 bottom: 0;
                 content: '';
+                opacity: 0.73;
                 display: block;
                 height: 100%;
                 left: 0;
@@ -55,12 +63,15 @@
                 z-index: 0;
             }
             .title-header {
-                bottom: 0;
                 color: $white;
                 left: 0;
                 padding: 30px;
                 position: absolute;
+                top: 58.5%;
                 z-index: 1;
+                @include min-mq ($mac) {
+                    padding: 10px 15px 30px 70px;
+                }
             }
             .services-main-title {
                 color: $white;

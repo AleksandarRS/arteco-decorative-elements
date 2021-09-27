@@ -18,27 +18,29 @@
 				<div class="newsletter-section-wrapper">
 					<div class="newsletter-section-inner">
 						<div class="container">
-							<div class="row newsletter-row">
-								<?php if($newsletter_title): ?>
-									<div class="col-md-6 newsletter-heading">
-										<header class="title-header">
-											<h2><?php echo $newsletter_title; ?></h2>
-										</header>
-									</div>
-								<?php endif ?>
-								<?php if($newsletter_title): ?>
-									<div class="col-md-6 align-center newsletter-cta">
-										<?php echo $newsletter_shortcode; ?>
-									</div>
-								<?php endif ?>
-							</div>
+							<div class="newsletter-row-wrapper">
+								<div class="row newsletter-row dark-bg">
+									<?php if($newsletter_title): ?>
+										<div class="col-md-6 newsletter-heading">
+											<header class="title-header">
+												<h2><?php echo $newsletter_title; ?></h2>
+											</header>
+										</div>
+									<?php endif ?>
+									<?php if($newsletter_title): ?>
+										<div class="col-md-6 newsletter-cta">
+											<?php echo $newsletter_shortcode; ?>
+										</div>
+									<?php endif ?>
+								</div>
+							</div> <!-- /.newsletter-row-wrapper -->
 						</div>
 							
 					</div>
 				</div>
 			</section>
 
-			<footer id="colophon" class="site-footer" role="contentinfo">
+			<footer id="colophon" class="site-footer dark-bg" role="contentinfo">
 				<div class="widget-wrapper">
 					<div class="container">
 						<div class="row footer-widgets-wrapper">
@@ -49,7 +51,20 @@
 				<?php if (get_theme_mod('footer_customizer_text') != ''): ?>
 					<div class="site-info">
 						<div class="container">
-							<div class="footer-copyright col-md-12 align-center"><?php echo get_theme_mod('footer_customizer_text'); ?></div>
+							<div class="footer-copyright col-md-12 d-flex justify-content-between">
+								<p><?php echo get_theme_mod('footer_customizer_text'); ?></p> 
+								<p>
+								<?php 
+									$link_footer = get_field('privacy_policy_link', 'option');
+                                    if( $link_footer ): 
+                                        $link_url = $link_footer['url'];
+                                        $link_title = $link_footer['title'];
+                                        $link_target = $link_footer['target'] ? $link_footer['target'] : '_self';
+                                    ?>
+                                    <a class="footer-link" href="<?php echo esc_url( $link_url ); ?>" target="<?php echo esc_attr( $link_target ); ?>"><?php echo esc_html( $link_title ); ?></a>
+                                <?php endif; ?>
+								</p>
+							</div>
 						</div>
 					</div><!-- .site-info -->
 				<?php endif; ?>

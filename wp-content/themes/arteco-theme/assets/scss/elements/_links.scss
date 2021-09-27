@@ -1,0 +1,113 @@
+.link-wrap {
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.link,
+.link > span {
+    position: relative;
+    display: inline-block;
+    padding: 4px 10px;
+    margin: -4px -10px;
+    &:before,
+    &:after {
+        background-color: $white;
+        border-radius: 5px;
+        content: '';
+        height: 0;
+        position: absolute;
+        width: 0;
+        @include transition-all;
+    }
+}
+.link {
+    &:before {
+        left: 0;
+        top: 0;
+        height: 1px;
+        width: 0;
+    }
+    &:after {
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 0;
+    }
+    &:hover {
+        &:before {
+            width: 100%;
+        }
+        &:after {
+            height: 100%;
+        }
+    }
+    &.link-primary {
+        color: $primary-color;
+        &:before,
+        &:after {
+            background-color: $primary-color;
+        }
+        > span {
+            &:before,
+            &:after {
+                background-color: $primary-color;
+            }
+        }
+    }
+    &.link-tertiary {
+        color: $tertiary-color;
+        &:before,
+        &:after {
+            background-color: $tertiary-color;
+        }
+        > span {
+            &:before,
+            &:after {
+                background-color: $tertiary-color;
+            }
+        }
+    }
+    &.link-white {
+        color: $white;
+        &:before,
+        &:after {
+            background-color: $white;
+        }
+        > span {
+            &:before,
+            &:after {
+                background-color: $white;
+            }
+        }
+    }
+    i {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 5px;
+        position: relative;
+        top: 1px;
+    }
+}
+.link > span {
+    &:before {
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        width: 0;
+    }
+    &:after {
+        right: 0;
+        bottom: 0;
+        width: 1px;
+        height: 0;
+    }
+    &:hover {
+        &:before {
+            width: 100%;
+        }
+        &:after {
+            height: 100%;
+        }
+    }
+}

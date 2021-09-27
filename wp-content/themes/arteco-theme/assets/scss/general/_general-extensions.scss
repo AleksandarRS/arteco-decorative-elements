@@ -26,7 +26,7 @@
     display: flex;
 }
 %left-calc {
-    padding-left: calc(50vw - ( #{$container-width} / 2 ) + 30px);
+    padding-left: calc(50vw - ( #{$container-width} / 2 ) + 8px);
     width: 100%;
     @include max-mq ($ls) {
         padding-left: 15px;
@@ -37,7 +37,7 @@
 }
 
 %right-calc {
-    padding-right: calc(50vw - ( #{$container-width} / 2 ) + 30px);
+    padding-right: calc(50vw - ( #{$container-width} / 2 ) + 8px);
     width: 100%;
     @include max-mq ($ls) {
         padding-right: 15px;

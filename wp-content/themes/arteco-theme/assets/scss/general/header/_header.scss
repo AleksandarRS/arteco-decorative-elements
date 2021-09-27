@@ -1,8 +1,14 @@
+.logo-menu-social-search-wrapper {
+    padding-bottom: 24px;
+    padding-top: 20px;
+    
+}
 .site-branding-main-logo {
-    max-width: 250px;
+    max-width: 202px;
+    padding-left: 16px;
     a {
         display: block;
-        padding-top: 15px;
+        padding-top: 10px;
     }
 }
 .logo-menu-wrapper,
@@ -11,6 +17,9 @@
 .header-social-search-wrap {
     align-items: center;
     display: flex;
+}
+.header-social-search-wrap {
+    padding-top: 5px;
 }
 .header-search > i,
 .social-icon-menu-items a {
@@ -41,6 +50,9 @@
     }
 }
 .header-search {
+    border-left: 1px solid $tertiary-color;
+    margin-left: 25px;
+    padding-left: 25px;
     .header-search-position {
         background-color: $white;
         height: 100%;

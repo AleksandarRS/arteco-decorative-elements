@@ -19,9 +19,16 @@
     @extend %right-calc;
 }
 
+.title-h1-size {
+    font-size: $font-size-h1;
+}
 .title-h2-size {
     font-size: $font-size-h2;
 }
 .title-h3-size {
     font-size: $font-size-h3;
+}
+
+.dark-bg {
+    background-color: $tertiary-color;
 }

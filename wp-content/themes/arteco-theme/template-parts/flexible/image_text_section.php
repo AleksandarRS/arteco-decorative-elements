@@ -5,7 +5,7 @@ $select_your_url = get_sub_field('select_your_url');
 ?>
 <section class="image-text-section">
     <div class="image-text-section-wrapper">
-        <div class="container">
+        <div class="container container-narrow">
             <div class="row image-text-row">
                 <?php if ( $main_image ) : ?>
                     <div class="col-md-6 image-text-section-main-image">
@@ -27,6 +27,6 @@ $select_your_url = get_sub_field('select_your_url');
                     </div>
                 <?php endif; ?>
             </div> <!-- /.row -->
-        </div> <!-- /.container -->
+        </div> <!-- /.container container-narrow -->
     </div> <!-- /.image-text-section-wrapper -->
 </section>

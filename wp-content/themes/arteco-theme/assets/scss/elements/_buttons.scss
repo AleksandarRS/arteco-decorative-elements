@@ -3,7 +3,7 @@
 	border-radius: 5px;
 	display: inline-block;
 	font-weight: $font-weight-b;
-	padding: 10px 20px;
+	padding: 12px 25px;
 	@include transition-all;
 	&.button-primary {
 		background-color: $primary-color;
