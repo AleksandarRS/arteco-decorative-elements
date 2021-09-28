@@ -34,6 +34,16 @@
     .services-subpage-link {
         display: block;
         height: 100%;
+        overflow: hidden;
+        &:hover {
+            .services-subpages-featured-image-position {
+                transform: scale(1.025);
+                &:after {
+                    opacity: 0.73;
+                    background-color: $secondary-color-600;
+                }
+            }
+        }
         .services-subpages-featured-image-position {
             background-position: center;
             background-repeat: no-repeat;
@@ -45,11 +55,12 @@
             right: 0;
             top: 0;
             width: 100%;
+            @include transition-all;
             &:after {
                 background: transparent;
-                background: -webkit-linear-gradient(to right, transparent 0%, #221303 100%);
-                background: -moz-linear-gradient(to right, transparent 0%, #221303 100%);
-                background: linear-gradient(to right, transparent 0%, #221303 100%);
+                background: -webkit-linear-gradient(to right, transparent 0%, $secondary-color-600 100%);
+                background: -moz-linear-gradient(to right, transparent 0%, $secondary-color-600 100%);
+                background: linear-gradient(to right, transparent 0%, $secondary-color-600 100%);
                 bottom: 0;
                 content: '';
                 opacity: 0.73;
@@ -61,6 +72,7 @@
                 top: 0;
                 width: 100%;
                 z-index: 0;
+                @include transition-all;
             }
             .title-header {
                 color: $white;

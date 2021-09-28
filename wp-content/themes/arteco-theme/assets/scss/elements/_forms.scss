@@ -15,14 +15,34 @@ input[type='datetime'],
 input[type='datetime-local'],
 input[type='color'],
 textarea {
-  border: 1px solid;
+  border: 1px solid $secondary-color-600;
   border-radius: 5px;
   font-size: $font-size-base;
   line-height: 1em;
   padding: 14px 10px;
   vertical-align: middle;
+  &:focus {
+    border: 1px solid $primary-color;
+    box-shadow: 0 1px 1px rgba($color: $tertiary-color, $alpha: 0.33) inset, 0 0 8px rgba($color: $tertiary-color, $alpha: 0.88);
+  }
   .dark-bg & {
     border: 1px solid $white;
+  }
+  #primary & {
+    border: 1px solid $secondary-color-600;
+    border-radius: 5px;
+    font-size: $font-size-base;
+    line-height: 1em;
+    padding: 14px 10px;
+    vertical-align: middle;
+    height: 50px;
+    &:focus {
+      border: 1px solid $primary-color;
+      box-shadow: 0 1px 1px rgba($color: $tertiary-color, $alpha: 0.33) inset, 0 0 8px rgba($color: $tertiary-color, $alpha: 0.88);
+    }
+    .dark-bg & {
+      border: 1px solid $white;
+    }
   }
 }
 
@@ -30,6 +50,9 @@ textarea {
   resize: none;
   padding-left: .6em;
   width: 100%;
+  #primary & {
+    height: auto;
+  }
 }
 
 button,
@@ -53,24 +76,31 @@ input[type='submit'] {
 /*---- Placeholder ----*/
 ::-webkit-input-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 \:-moz-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 ::-moz-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 \:-ms-input-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 *::-webkit-input-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 *:-moz-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 *:-ms-input-placeholder {
   opacity: 1;
+  color: $secondary-color !important;
 }
 
 fieldset {

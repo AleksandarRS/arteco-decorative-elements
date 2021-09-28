@@ -7,11 +7,23 @@
         display: block;
         height: 100%;
         margin-right: 0;
-        left: auto;
-        right: 0;
+        position: absolute;
         top: 0;
         width: 6.2%;
-        position: absolute;
+    }
+    &.pseudo-element-right {
+        &:after {
+            left: auto;
+            right: 0;
+        }
+        
+    }
+    &.pseudo-element-left {
+        background-color: $tertiary-color-200;
+        &:after {
+            left: 0;
+            right: auto;
+        }
     }
 }
 .image-text-section-wrapper {
@@ -73,4 +85,16 @@
 }
 .image-text-section-read-more-button-wrap {
     padding-top: 7px;
+}
+
+.text-first-image-second {
+    .image-text-section-main-image {
+        order: 1;
+    }
+    .image-text-section-main-text-content-description {
+        order: 0;
+    }
+    .image-text-section-main-image-inner {
+        margin-left: auto;
+    }
 }

@@ -1,1 +1,29 @@
 @import "../../../node_modules/slick-carousel/slick/slick.scss";
+.slick-dots {
+    list-style: none;
+    padding: 35px 15px 15px;
+    text-align: center;
+    li {
+        display: inline-block;
+        margin: 0 8px;
+        &.slick-active {
+            button {
+                background-color: $tertiary-color;
+            }
+        }
+        button {
+            background-color: $white;
+            border-radius: 50%;
+            border: 1px solid $tertiary-color;
+            color: transparent;
+            font-size: 0;
+            height: 12px;
+            padding: 0;
+            width: 12px;
+            @include transition-bg;
+            &:hover {
+                background-color: $tertiary-color;
+            }
+        }
+    }
+}

@@ -30,10 +30,10 @@ $link = get_sub_field('see_all_products_link');
                                         <?php endif; ?>
                                         <div class="post-heading-excerpt-button-wrapper">
                                             <div class="post-heading-excerpt-wrap">
-                                                <header class="post-title">
-                                                    <h2 class="title-h3-size"><?php the_title(); ?></h2>
+                                                <header class="post-title entry-header">
+                                                    <h2 class="title-h3-size entry-title"><?php the_title(); ?></h2>
                                                 </header>
-                                                <div class="post-product-excerpt">
+                                                <div class="post-product-excerpt entry-content">
                                                         <?php the_excerpt(); ?>
                                                 </div>
                                             </div>

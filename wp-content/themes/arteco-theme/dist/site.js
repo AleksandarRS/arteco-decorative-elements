@@ -512,13 +512,32 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    	# Cache dom and strings
    -------------------------------------------------------------------------------*/
 			$dom: {
-				slickSliderPartners: $(".our-partners-list-slider")
+				slickSliderPartners: $(".our-partners-list-slider"),
+				slickGallery: $(".gallery-slider")
 			},
 
 			/*-------------------------------------------------------------------------------
    	# Initialize
    -------------------------------------------------------------------------------*/
 			init: function init() {
+
+				this.$dom.slickGallery.slick({
+					slidesToScroll: 1,
+					slidesToShow: 3,
+					centerMode: true,
+					centerPadding: 100,
+					dots: true,
+					arrows: false
+					// prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+					// nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
+				});
+
+				this.$dom.slickSliderPartners.slick({
+					slidesToScroll: 1,
+					slidesToShow: 3,
+					dots: false,
+					arrows: false
+				});
 
 				// this.$dom.slickSlider.slick({
 				// 	slidesToScroll: 1,
@@ -530,13 +549,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				// 	prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
 				// 	nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
 				// });
-
-				this.$dom.slickSliderPartners.slick({
-					slidesToScroll: 1,
-					slidesToShow: 3,
-					dots: false,
-					arrows: false
-				});
 			}
 		};
 	}, { "slick-carousel": 9 }], 7: [function (require, module, exports) {

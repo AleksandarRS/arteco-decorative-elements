@@ -30,13 +30,13 @@ $link = get_sub_field('see_all_posts_link');
                                         <?php endif; ?>
                                         <div class="post-heading-excerpt-button-wraper">
                                             <div class="post-heading-excerpt-wrap">
-                                                <header class="post-title">
-                                                    <h2 class="title-h3-size"><?php the_title(); ?></h2>
-                                                    <div class="post-date">
+                                                <header class="post-title entry-header">
+                                                    <h2 class="title-h3-size entry-title"><?php the_title(); ?></h2>
+                                                    <div class="post-date entry-meta">
                                                         <?php the_date( 'd.m.Y', '<p>', '</p>' ); ?>
                                                     </div>
                                                 </header>
-                                                <div class="post-product-excerpt">
+                                                <div class="post-product-excerpt entry-content">
                                                     <?php the_excerpt(); ?>
                                                 </div>
                                             </div>

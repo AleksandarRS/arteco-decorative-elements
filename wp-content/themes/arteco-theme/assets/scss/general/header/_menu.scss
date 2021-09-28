@@ -56,9 +56,9 @@
 		top: 0;
 		margin-right: auto;
 		margin-left: 40px;
-		@include min-mq ($fhd) {
-			margin-left: 88px;
-		}
+		// @include min-mq ($fhd) {
+		// 	margin-left: 88px;
+		// }
 		@include max-mq($responsive-toggle-breakpoint) {
 			background-color: $white;
 			position: fixed;
@@ -80,10 +80,10 @@
 
 		.arrow-toggle {
 			position: absolute;
-			right: -2px;
-			top: 0;
+			right: -6px;
+			top: 3px;
 			cursor: pointer;
-			padding: 5px;
+			padding: 10px 0;
 			height: 100%;
 			display: flex;
 			align-items: center;
@@ -107,7 +107,7 @@
 	
 				li {
 					display: block;
-					margin: 0;
+					margin: 0 5px;
 					position: relative;
 					color: $secondary-color;
 					transition: color 0.4s ease;
@@ -125,15 +125,15 @@
 
 					&.current-menu-item, 
 					&.current_page_parent {
-						a {
-							color: $primary-color;
+						> a {
+							color: $tertiary-color;
 						}
 						
 					}
 
 					&:hover{
-						a {
-							color: $primary-color;
+						> a {
+							color: $tertiary-color;
 						}
 					}
 	
@@ -142,7 +142,8 @@
 						display: block;
 						font-weight: 400;
 						letter-spacing: 1.1px;
-						padding: 10px 10px;
+						padding: 4px 10px;
+						// margin: -4px -10px;
 						position: relative;
 						width: 100%;
 
@@ -182,15 +183,16 @@
 					text-align: center;
 					top: 99%;
 					visibility: hidden;
-					width: 200px;
+					width: 230px;
 					z-index: 10;
 				}
 	
 				li {
 					display: block;
+					margin: 0;
 	
 					a {
-						padding: 10px 20px;
+						padding: 10px 10px;
 	
 						@include max-mq($lg - 1) {
 							padding: 10px 0;

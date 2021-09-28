@@ -2,11 +2,13 @@
 $main_image = get_sub_field('main_image');
 $text_content_section = get_sub_field('text_content_section');
 $select_your_url = get_sub_field('select_your_url');
+
+$imagetext_position = get_sub_field('imagetext_position');
 ?>
-<section class="image-text-section">
+<section class="image-text-section<?php if ( $imagetext_position == true ): ?> pseudo-element-right<?php else: ?> pseudo-element-left<?php endif; ?>">
     <div class="image-text-section-wrapper">
         <div class="container container-narrow">
-            <div class="row image-text-row">
+            <div class="row image-text-row<?php if ( $imagetext_position == true ): ?> image-first-text-second<?php else: ?> text-first-image-second<?php endif; ?>">
                 <?php if ( $main_image ) : ?>
                     <div class="col-md-6 image-text-section-main-image">
                         <div class="image-text-section-main-image-inner">

@@ -18,6 +18,7 @@ module.exports = {
 	-------------------------------------------------------------------------------*/
 	$dom: {
 		slickSliderPartners: $(".our-partners-list-slider"),
+		slickGallery: $(".gallery-slider"),
 	},
 	
 
@@ -25,6 +26,24 @@ module.exports = {
 		# Initialize
 	-------------------------------------------------------------------------------*/
 	init: function () {
+
+		this.$dom.slickGallery.slick({
+			slidesToScroll: 1,
+			slidesToShow: 3,
+			centerMode: true,
+			centerPadding: 100,
+			dots: true,
+			arrows: false,
+			// prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
+			// nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
+		});
+
+		this.$dom.slickSliderPartners.slick({
+			slidesToScroll: 1,
+			slidesToShow: 3,
+			dots: false,
+			arrows: false,
+		});
 
 		// this.$dom.slickSlider.slick({
 		// 	slidesToScroll: 1,
@@ -36,13 +55,6 @@ module.exports = {
 		// 	prevArrow: "<button type='button' class='slick-prev pull-left'><i class='fa fa-angle-left' aria-hidden='true'></i></button>",
 		// 	nextArrow: "<button type='button' class='slick-next pull-right'><i class='fa fa-angle-right' aria-hidden='true'></i></button>",
 		// });
-
-		this.$dom.slickSliderPartners.slick({
-			slidesToScroll: 1,
-			slidesToShow: 3,
-			dots: false,
-			arrows: false,
-		});
 
 	}
 };

@@ -68,7 +68,7 @@ if ( ! function_exists( 'ade_post_navigation' ) ) :
 	 */
 	function ade_post_navigation() {
 		?>
-		<div class="nav-links">
+		<div class="nav-links col-md-12">
 		<?php
 		global $wp_query;
 
@@ -79,8 +79,8 @@ if ( ! function_exists( 'ade_post_navigation' ) ) :
 				'format' => '?paged=%#%',
 				'current' => max( 1, get_query_var('paged') ),
 				'total' => $wp_query->max_num_pages,
-				'prev_text'          => __('<i class="icon-angle-left" aria-hidden="true"></i>'),
-				'next_text'          => __('<i class="icon-angle-right" aria-hidden="true"></i>')
+				'prev_text'          => __('<i class="icon-arrow-left" aria-hidden="true"></i>'),
+				'next_text'          => __('<i class="icon-arrow-right" aria-hidden="true"></i>')
 		) );
 		?>
 	</div>

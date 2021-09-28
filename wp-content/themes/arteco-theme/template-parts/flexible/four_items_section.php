@@ -1,4 +1,6 @@
 <?php
+$the_title = get_sub_field('the_title');
+
 $icon = get_sub_field('icon');
 $title = get_sub_field('title');
 $text_description = get_sub_field('text_description');
@@ -25,7 +27,8 @@ $read_more_link_f = get_sub_field('read_more_link_f');
             <div class="row">
                 <div class="col-md-12 main-title-section-heading align-center">
                     <header>
-                        <h2><?php _e('Naši proizvodi i usluge','ade'); ?></h2>
+                        <h2><?php // _e('Naši proizvodi','ade'); ?></h2>
+                        <h2><?php echo $the_title; ?></h2>
                     </header>
                 </div>
                 <div class="four-items-description-item col-md-3">

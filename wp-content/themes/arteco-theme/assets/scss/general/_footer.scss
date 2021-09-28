@@ -67,6 +67,9 @@
         a {
             color: $primary-color;
             display: block;
+            &:hover {
+                color: $tertiary-color;
+            }
         }
         i {
             display: inline-block;

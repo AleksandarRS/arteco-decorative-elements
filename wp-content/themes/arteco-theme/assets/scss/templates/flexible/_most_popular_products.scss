@@ -1,11 +1,17 @@
+.post-product-items-cards-wrapper {
+    padding-top: 15px;
+    flex-wrap: wrap;
+    &.post-product-items-cards-wrapper-post-page {
+        padding-bottom: 45px;
+        padding-top: 80px;
+    }
+
+}
 .most-popular-products-section {
     background-color: $tertiary-color-200;
     .most-popular-products-section-wrapper {
         padding-bottom: 50px;
         padding-top: 50px;
-    }
-    .post-product-items-cards-wrapper {
-        padding-top: 15px;
     }
     .post-product-items-cards-item {
         padding-left: 6px;

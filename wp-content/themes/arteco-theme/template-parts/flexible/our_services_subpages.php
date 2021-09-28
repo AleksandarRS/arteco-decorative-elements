@@ -27,7 +27,8 @@ $main_title = get_sub_field('main_title');
                                 <a class="services-subpage-link" href="<?php echo esc_url(get_permalink($page_item->ID)); ?>">
                                     <div class="services-subpages-featured-image-position" style="background-image: url('<?php echo get_the_post_thumbnail_url($page_item->ID,'large'); ?>');">
                                         <header class="title-header">
-                                            <p class="title-label"><?php echo $main_title; ?></p>
+                                            <!-- <p class="title-label"><?php // echo $main_title; ?></p> -->
+                                            <p class="title-label"><?php _e('Naše usluge','ade'); ?></p>
                                             <h2 class="services-main-title"><?php echo $page_item->post_title ; ?></h2>
                                         </header>
                                         <?php // echo get_the_post_thumbnail($page_item->ID,'large'); ?>
